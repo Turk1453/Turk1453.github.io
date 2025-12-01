@@ -3,283 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turk1453 | Geliştirici Portfolyosu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <title>Turk1453 | 3D World</title>
     <style>
-        /* --- GENEL AYARLAR (RESET) --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- TEMEL AYARLAR --- */
+        body { 
+            margin: 0; 
+            overflow: hidden; /* Scrollbar'ı gizle */
+            background-color: #000;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
         }
 
-        body {
-            background-color: #0d1117; /* Ana arka plan */
-            color: #c9d1d9; /* Metin rengi */
-            font-family: 'Inter', sans-serif; /* Okunaklı ana font */
-            line-height: 1.6;
-        }
-
-        /* Kod benzeri yazılar için font */
-        code, .tech-stack {
-            font-family: 'Fira Code', monospace;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: 0.3s;
-        }
-
-        /* --- ANA İSKELET (LAYOUT) --- */
-        .wrapper {
-            display: flex;
-            min-height: 100vh; /* Tüm ekranı kapla */
-        }
-
-        /* --- SIDEBAR (SOL Taraf) --- */
-        .sidebar {
-            width: 280px;
-            background-color: #161b22; /* Sidebar daha koyu bir ton */
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #30363d;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
-
-        /* Logo Alanı */
-        .logo-container {
-            margin-bottom: 3rem;
-        }
-        .logo-text {
-            font-family: 'Fira Code', monospace;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: #58a6ff; /* Mavi vurgu */
-            letter-spacing: -1px;
-        }
-        .logo-text span {
-            color: #7ee787; /* Yeşil nokta */
-        }
-        .role-text {
-            font-size: 0.9rem;
-            color: #8b949e;
-            margin-top: 5px;
-        }
-
-        /* Navigasyon Menüsü */
-        .nav-menu {
-            list-style: none;
-            flex-grow: 1; /* Boşluğu doldur */
-        }
-        .nav-item {
-            margin-bottom: 1rem;
-        }
-        .nav-link {
-            display: block;
-            padding: 10px 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #c9d1d9;
-            border-bottom: 2px solid transparent;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #58a6ff;
-            border-bottom-color: #58a6ff;
-            padding-left: 10px; /* Hover efekt */
-        }
-
-        /* Sidebar Alt Kısım (Footer) */
-        .sidebar-footer {
-            font-size: 0.8rem;
-            color: #8b949e;
-        }
-
-        /* --- ANA İÇERİK (SAĞ Taraf) --- */
-        .main-content {
-            flex: 1; /* Kalan tüm alanı kapla */
-            padding: 4rem;
-            max-width: 1000px; /* Çok geniş ekranlarda yayılmasın */
-        }
-
-        /* Bölüm Başlıkları */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            color: #f0f6fc;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
+        /* --- SABİT LOGO --- */
+        #logo {
             position: absolute;
+            top: 30px;
+            left: 40px;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #00ffcc; /* Siber Turkuaz */
+            z-index: 100;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            pointer-events: none; /* Tıklamayı engelle */
+        }
+
+        /* --- İÇERİK YAZILARI (ORTA) --- */
+        #content-overlay {
+            position: absolute;
+            top: 50%;
+            left: 10%; /* Yazılar biraz solda dursun */
+            transform: translateY(-50%);
+            z-index: 10;
+            pointer-events: none;
+            max-width: 500px;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            margin: 0;
+            color: #fff;
+            opacity: 0; /* Başlangıçta gizli */
+            transform: translateY(20px);
+            position: absolute;
+            top: 0;
             left: 0;
-            bottom: -10px;
-            width: 60px;
-            height: 4px;
-            background-color: #7ee787; /* Yeşil alt çizgi */
+            white-space: nowrap;
         }
-
-        /* Giriş Yazısı */
-        .hero-text {
+        
+        .section-desc {
             font-size: 1.2rem;
-            margin-bottom: 3rem;
-            color: #8b949e;
-        }
-        .highlight {
-            color: #58a6ff;
-            font-weight: 600;
-        }
-
-        /* Proje Kartları */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Otomatik sığdır */
-            gap: 2rem;
-        }
-        .project-card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .project-card:hover {
-            transform: translateY(-5px); /* Yukarı kalkma efekti */
-            border-color: #58a6ff;
-        }
-        .project-card h3 {
-            color: #7ee787;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-        .tech-stack {
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #8b949e;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .tech-tag {
-            background: #21262d;
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid #30363d;
+            margin-top: 10px;
+            color: #aaa;
+            opacity: 0;
+            transform: translateY(20px);
+            position: absolute;
+            top: 80px; /* Başlığın altında */
+            left: 0;
+            line-height: 1.5;
         }
 
-        /* --- MOBİL UYUMLULUK --- */
-        @media (max-width: 768px) {
-            .wrapper {
-                flex-direction: column; /* Yan yana değil alt alta */
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding: 1.5rem;
-                text-align: center;
-                border-right: none;
-                border-bottom: 1px solid #30363d;
-            }
-            .main-content {
-                padding: 2rem;
-            }
-            .nav-link:hover {
-                padding-left: 0; /* Mobilde kayma efektini kapat */
-            }
+        /* Aktif olan yazının stili */
+        .active-text {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: all 1s ease;
+        }
+
+        /* --- SCROLL UYARISI --- */
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #555;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <aside class="sidebar">
-            <div class="logo-container">
-                <div class="logo-text">Turk1453<span>.</span></div>
-                <div class="role-text">Python & Security Dev</div>
-            </div>
+    <div id="logo">TURK1453</div>
 
-            <nav>
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="#giris" class="nav-link active">Ana Sayfa</a></li>
-                    <li class="nav-item"><a href="#projeler" class="nav-link">Projelerim</a></li>
-                    <li class="nav-item"><a href="#hakkimda" class="nav-link">Hakkımda</a></li>
-                    <li class="nav-item"><a href="mailto:senin@mailin.com" class="nav-link">İletişim</a></li>
-                </ul>
-            </nav>
+    <canvas id="webgl"></canvas>
 
-            <div class="sidebar-footer">
-                <p>© 2025 Turk1453</p>
-                <p>GitHub Pages ile yapıldı.</p>
-            </div>
-        </aside>
-        <main class="main-content">
-            
-            <section id="giris">
-                <h1 class="section-title" style="font-size: 3rem; margin-bottom: 1rem;">Merhaba, <span style="color:#58a6ff;">Turk1453</span> Burada.</h1>
-                <p class="hero-text">
-                    Dijital dünyada <span class="highlight">güvenli</span> ve <span class="highlight">akıllı</span> çözümler üretiyorum. 
-                    Python ile veriyi işliyor, yapay zeka ile güçlendiriyor ve siber güvenlik bakış açısıyla koruyorum.
-                </p>
-            </section>
+    <div id="content-overlay">
+        <h1 class="section-title active-text" id="t-0">HOŞ GELDİNİZ</h1>
+        <p class="section-desc active-text" id="d-0">Siber güvenlik ve yapay zeka ile geleceği kodluyorum.<br>Keşfetmek için kaydırın.</p>
 
-            <hr style="border:none; border-top: 1px solid #30363d; margin: 3rem 0;">
+        <h1 class="section-title" id="t-1">SYNCRAPY ERP</h1>
+        <p class="section-desc" id="d-1">İşletmeler için geliştirdiğim yapay zeka destekli,<br>bulut tabanlı yeni nesil yönetim sistemi.</p>
 
-            <section id="projeler">
-                <h2 class="section-title">Öne Çıkan Projeler</h2>
+        <h1 class="section-title" id="t-2">BEYAZ ŞAPKALI</h1>
+        <p class="section-desc" id="d-2">Sistemlerin açıklarını buluyor, analiz ediyor<br>ve güvenliği maksimuma çıkarıyorum.</p>
+
+        <h1 class="section-title" id="t-3">İLETİŞİM</h1>
+        <p class="section-desc" id="d-3">Projeleriniz ve işbirlikleri için:<br>email@turk1453.com</p>
+    </div>
+
+    <div class="scroll-hint">▼ KAYDIRIN ▼</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <script>
+        // --- 1. SAHNE KURULUMU (Three.js) ---
+        const scene = new THREE.Scene();
+        // Hafif bir sis ekleyerek derinlik katalım
+        scene.fog = new THREE.FogExp2(0x000000, 0.02); 
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#webgl'),
+            antialias: true
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // --- 2. NESNELERİ OLUŞTURMA ---
+        
+        // A) MERKEZDEKİ KÜRE (Wireframe World)
+        const geometry = new THREE.IcosahedronGeometry(10, 2); // 10 birim yarıçap, detay seviyesi 2
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00ffcc, // Neon Turkuaz
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // B) YILDIZLAR (Arka Plan Parçacıkları)
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 700; // Yıldız sayısı
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            // Rastgele uzay koordinatları
+            posArray[i] = (Math.random() - 0.5) * 60; 
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0xffffff
+        });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // Kamera Pozisyonu (Biraz geride ve sağda)
+        camera.position.z = 15;
+        camera.position.x = 5;
+
+        // --- 3. SCROLL & ANİMASYON MANTIĞI ---
+        
+        let currentSection = 0;
+        const totalSections = 4;
+        let isAnimating = false; // Hızlı scrollu engellemek için kilit
+
+        // Mouse Tekerleği Olayı
+        window.addEventListener('wheel', (event) => {
+            if (isAnimating) return; // Animasyon bitmeden yenisini başlatma
+
+            let direction = event.deltaY > 0 ? 1 : -1;
+            let nextSection = currentSection + direction;
+
+            // Sınırları kontrol et (0'dan küçük veya 3'ten büyük olamaz)
+            if (nextSection >= 0 && nextSection < totalSections) {
+                changeSection(nextSection);
+            }
+        });
+
+        // Mobil Dokunmatik (Basit Kaydırma)
+        let touchStartY = 0;
+        window.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
+        window.addEventListener('touchend', e => {
+            if (isAnimating) return;
+            let touchEndY = e.changedTouches[0].clientY;
+            if (touchStartY > touchEndY + 50) changeSection(currentSection + 1); // Aşağı kaydır
+            if (touchStartY < touchEndY - 50) changeSection(currentSection - 1); // Yukarı kaydır
+        });
+
+        function changeSection(index) {
+            if (index < 0 || index >= totalSections) return;
+            isAnimating = true;
+
+            // 1. Eski yazıları gizle
+            gsap.to(`#t-${currentSection}`, {opacity: 0, y: -20, duration: 0.5});
+            gsap.to(`#d-${currentSection}`, {opacity: 0, y: -20, duration: 0.5});
+
+            // 2. KÜREYİ DÖNDÜR (GSAP ile pürüzsüz animasyon)
+            gsap.to(sphere.rotation, {
+                x: index * 0.5, // X ekseninde biraz döndür
+                y: index * 1.5, // Y ekseninde daha çok döndür
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+
+            // 3. KAMERAYI HAFİF HAREKET ETTİR (Sinematik etki)
+            gsap.to(camera.position, {
+                z: 15 - (index * 1), // Yakınlaş
+                x: 5 - (index * 2),  // Sola kay
+                duration: 1.5
+            });
+
+            currentSection = index;
+
+            // 4. Yeni yazıları getir (Animasyon bitimine yakın)
+            setTimeout(() => {
+                const title = document.getElementById(`t-${currentSection}`);
+                const desc = document.getElementById(`d-${currentSection}`);
                 
-                <div class="project-grid">
-                    <div class="project-card">
-                        <h3>🚀 Syncrapy ERP</h3>
-                        <p>KOBİ'ler için geliştirilen, yapay zeka destekli yeni nesil ERP yazılımı. Stok, cari ve muhasebe süreçlerini tek merkezden yöneten bulut tabanlı çözüm.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">AI Entegrasyonu</span>
-                        </div>
-                    </div>
+                // CSS classlarını temizle ve yeniden tetikle
+                document.querySelectorAll('.section-title').forEach(el => el.classList.remove('active-text'));
+                document.querySelectorAll('.section-desc').forEach(el => el.classList.remove('active-text'));
 
-                    <div class="project-card">
-                        <h3>📱 KivyMD Araçları</h3>
-                        <p>Android için geliştirilmiş, Python tabanlı pratik yardımcı uygulamalar. Platform bağımsız modern arayüz tasarımları.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">KivyMD</span>
-                            <span class="tech-tag">Android</span>
-                        </div>
-                    </div>
+                // GSAP ile getir
+                gsap.fromTo(title, {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.5});
+                gsap.fromTo(desc, {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.5, delay: 0.1});
+                
+                isAnimating = false; // Kilidi aç
+            }, 800);
+        }
 
-                     <div class="project-card">
-                        <h3>🛡️ Pentest Raporları</h3>
-                        <p>Web ve ağ güvenliği üzerine gerçekleştirilen sızma testleri ve güvenlik analizi çalışmaları.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Siber Güvenlik</span>
-                            <span class="tech-tag">Ağ Analizi</span>
-                            <span class="tech-tag">Raporlama</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        // --- 4. SÜREKLİ DÖNGÜ (Loop) ---
+        const clock = new THREE.Clock();
 
-            <hr style="border:none; border-top: 1px solid #30363d; margin: 3rem 0;">
+        function animate() {
+            requestAnimationFrame(animate);
 
-             <section id="hakkimda">
-                <h2 class="section-title">Hakkımda & Vizyon</h2>
-                <p style="font-size: 1.1rem; color: #c9d1d9;">
-                    Yazılım geliştirme tutkumu siber güvenlik merakımla birleştiriyorum. Amacım sadece kod yazmak değil; 
-                    sürdürülebilir, güvenli ve gerçek dünya problemlerini çözen mimariler kurmak. 
-                    <br><br>
-                    Şu anda tüm odağımı, işletmelerin dijital dönüşümünü hızlandıracak olan <strong>Syncrapy ERP</strong> projesine vermiş durumdayım.
-                </p>
-            </section>
+            const elapsedTime = clock.getElapsedTime();
 
-        </main>
-        </div>
+            // Küre kendi ekseninde yavaşça dönsün (Boş durmasın)
+            sphere.rotation.y += 0.002;
+            
+            // Yıldızlar yavaşça aksın
+            particlesMesh.rotation.y = -elapsedTime * 0.05;
 
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Pencere boyutu değişirse ayarla (Responsive)
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
 </body>
 </html>
+
