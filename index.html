@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geliştirici Portfolyosu</title>
+    <style>
+        /* Genel Tasarım - Hacker / Developer Teması */
+        body {
+            background-color: #0d1117; /* GitHub Dark Mode Rengi */
+            color: #c9d1d9;
+            font-family: 'Courier New', Courier, monospace; /* Kodlama Fontu */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Merkez Kutusu */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Başlıklar */
+        h1 {
+            color: #58a6ff; /* Mavi vurgu */
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #7ee787; /* Yeşil vurgu */
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        /* Profil Resmi Yeri (İstersen sonra resim eklersin) */
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #30363d;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #8b949e;
+            border: 2px solid #58a6ff;
+        }
+
+        /* Yetenek Etiketleri */
+        .skills {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            background-color: #21262d;
+            color: #7ee787;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #30363d;
+            font-size: 0.9rem;
+        }
+
+        /* Proje Kutuları */
+        .project-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            transition: 0.3s;
+        }
+        .project-card:hover {
+            border-color: #8b949e;
+        }
+        .project-title {
+            color: #ff7b72; /* Kırmızı vurgu */
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+        
+        a { color: #58a6ff; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="profile-pic">&lt;/&gt;</div>
+        <h1>Merhaba, Ben Bir Geliştiriciyim</h1>
+        <p>Python Geliştiricisi | Siber Güvenlik Araştırmacısı | Girişimci</p>
+        
+        <div class="skills">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">KivyMD</span>
+            <span class="tag">Siber Güvenlik</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Linux</span>
+        </div>
+
+        <h2>Hakkımda</h2>
+        <p>
+            Yazılım dünyasında modern çözümler üreten ve güvenliği ön planda tutan bir geliştiriciyim. 
+            Python ile otomasyonlar yazıyor, KivyMD ile mobil uygulamalar geliştiriyorum. 
+            Aynı zamanda siber güvenlik alanında "Beyaz Şapkalı Hacker" olarak sistemleri analiz ediyorum.
+        </p>
+
+        <h2>Projeler</h2>
+
+        <div class="project-card">
+            <div class="project-title">🚀 Syncrapy ERP (Geliştirme Aşamasında)</div>
+            <p>Küçük ve orta ölçekli işletmeler için yapay zeka destekli, Python tabanlı yeni nesil ERP yazılımı. Stok takibi, muhasebe ve CRM tek bir çatı altında.</p>
+        </div>
+
+        <div class="project-card">
+            <div class="project-title">📱 Mobil Araçlar</div>
+            <p>KivyMD kullanılarak geliştirilmiş Android tabanlı yardımcı araçlar ve otomasyon uygulamaları.</p>
+        </div>
+
+        <div class="project-card">
+            <div class="project-title">🛡️ Güvenlik Analizleri</div>
+            <p>Web ve Ağ güvenliği üzerine pentest çalışmaları ve güvenlik raporlamaları.</p>
+        </div>
+
+        <footer>
+            <p>2025 © Tüm Hakları Saklıdır.</p>
+            <p>İletişim: <a href="mailto:email@adresin.com">email@adresin.com</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
