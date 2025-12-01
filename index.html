@@ -3,144 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geliştirici Portfolyosu</title>
+    <title>Turk1453 | Geliştirici Portfolyosu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* Genel Tasarım - Hacker / Developer Teması */
-        body {
-            background-color: #0d1117; /* GitHub Dark Mode Rengi */
-            color: #c9d1d9;
-            font-family: 'Courier New', Courier, monospace; /* Kodlama Fontu */
+        /* --- GENEL AYARLAR (RESET) --- */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d1117; /* Ana arka plan */
+            color: #c9d1d9; /* Metin rengi */
+            font-family: 'Inter', sans-serif; /* Okunaklı ana font */
             line-height: 1.6;
         }
 
-        /* Merkez Kutusu */
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            text-align: center;
+        /* Kod benzeri yazılar için font */
+        code, .tech-stack {
+            font-family: 'Fira Code', monospace;
         }
 
-        /* Başlıklar */
-        h1 {
-            color: #58a6ff; /* Mavi vurgu */
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #7ee787; /* Yeşil vurgu */
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-
-        /* Profil Resmi Yeri (İstersen sonra resim eklersin) */
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: #30363d;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #8b949e;
-            border: 2px solid #58a6ff;
-        }
-
-        /* Yetenek Etiketleri */
-        .skills {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .tag {
-            background-color: #21262d;
-            color: #7ee787;
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px solid #30363d;
-            font-size: 0.9rem;
-        }
-
-        /* Proje Kutuları */
-        .project-card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
+        a {
+            text-decoration: none;
+            color: inherit;
             transition: 0.3s;
         }
-        .project-card:hover {
-            border-color: #8b949e;
-        }
-        .project-title {
-            color: #ff7b72; /* Kırmızı vurgu */
-            font-weight: bold;
-            font-size: 1.2rem;
+
+        /* --- ANA İSKELET (LAYOUT) --- */
+        .wrapper {
+            display: flex;
+            min-height: 100vh; /* Tüm ekranı kapla */
         }
 
-        /* Footer */
-        footer {
-            margin-top: 50px;
+        /* --- SIDEBAR (SOL Taraf) --- */
+        .sidebar {
+            width: 280px;
+            background-color: #161b22; /* Sidebar daha koyu bir ton */
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        /* Logo Alanı */
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+        .logo-text {
+            font-family: 'Fira Code', monospace;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #58a6ff; /* Mavi vurgu */
+            letter-spacing: -1px;
+        }
+        .logo-text span {
+            color: #7ee787; /* Yeşil nokta */
+        }
+        .role-text {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-top: 5px;
+        }
+
+        /* Navigasyon Menüsü */
+        .nav-menu {
+            list-style: none;
+            flex-grow: 1; /* Boşluğu doldur */
+        }
+        .nav-item {
+            margin-bottom: 1rem;
+        }
+        .nav-link {
+            display: block;
+            padding: 10px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #c9d1d9;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #58a6ff;
+            border-bottom-color: #58a6ff;
+            padding-left: 10px; /* Hover efekt */
+        }
+
+        /* Sidebar Alt Kısım (Footer) */
+        .sidebar-footer {
             font-size: 0.8rem;
             color: #8b949e;
         }
-        
-        a { color: #58a6ff; text-decoration: none; }
+
+        /* --- ANA İÇERİK (SAĞ Taraf) --- */
+        .main-content {
+            flex: 1; /* Kalan tüm alanı kapla */
+            padding: 4rem;
+            max-width: 1000px; /* Çok geniş ekranlarda yayılmasın */
+        }
+
+        /* Bölüm Başlıkları */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #f0f6fc;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background-color: #7ee787; /* Yeşil alt çizgi */
+        }
+
+        /* Giriş Yazısı */
+        .hero-text {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #8b949e;
+        }
+        .highlight {
+            color: #58a6ff;
+            font-weight: 600;
+        }
+
+        /* Proje Kartları */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Otomatik sığdır */
+            gap: 2rem;
+        }
+        .project-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px); /* Yukarı kalkma efekti */
+            border-color: #58a6ff;
+        }
+        .project-card h3 {
+            color: #7ee787;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .tech-stack {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #8b949e;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tech-tag {
+            background: #21262d;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #30363d;
+        }
+
+        /* --- MOBİL UYUMLULUK --- */
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column; /* Yan yana değil alt alta */
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1.5rem;
+                text-align: center;
+                border-right: none;
+                border-bottom: 1px solid #30363d;
+            }
+            .main-content {
+                padding: 2rem;
+            }
+            .nav-link:hover {
+                padding-left: 0; /* Mobilde kayma efektini kapat */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="profile-pic">&lt;/&gt;</div>
-        <h1>Merhaba, Ben Bir Geliştiriciyim</h1>
-        <p>Python Geliştiricisi | Siber Güvenlik Araştırmacısı | Girişimci</p>
-        
-        <div class="skills">
-            <span class="tag">Python</span>
-            <span class="tag">Django</span>
-            <span class="tag">KivyMD</span>
-            <span class="tag">Siber Güvenlik</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Linux</span>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-text">Turk1453<span>.</span></div>
+                <div class="role-text">Python & Security Dev</div>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#giris" class="nav-link active">Ana Sayfa</a></li>
+                    <li class="nav-item"><a href="#projeler" class="nav-link">Projelerim</a></li>
+                    <li class="nav-item"><a href="#hakkimda" class="nav-link">Hakkımda</a></li>
+                    <li class="nav-item"><a href="mailto:senin@mailin.com" class="nav-link">İletişim</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>© 2025 Turk1453</p>
+                <p>GitHub Pages ile yapıldı.</p>
+            </div>
+        </aside>
+        <main class="main-content">
+            
+            <section id="giris">
+                <h1 class="section-title" style="font-size: 3rem; margin-bottom: 1rem;">Merhaba, <span style="color:#58a6ff;">Turk1453</span> Burada.</h1>
+                <p class="hero-text">
+                    Dijital dünyada <span class="highlight">güvenli</span> ve <span class="highlight">akıllı</span> çözümler üretiyorum. 
+                    Python ile veriyi işliyor, yapay zeka ile güçlendiriyor ve siber güvenlik bakış açısıyla koruyorum.
+                </p>
+            </section>
+
+            <hr style="border:none; border-top: 1px solid #30363d; margin: 3rem 0;">
+
+            <section id="projeler">
+                <h2 class="section-title">Öne Çıkan Projeler</h2>
+                
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>🚀 Syncrapy ERP</h3>
+                        <p>KOBİ'ler için geliştirilen, yapay zeka destekli yeni nesil ERP yazılımı. Stok, cari ve muhasebe süreçlerini tek merkezden yöneten bulut tabanlı çözüm.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">AI Entegrasyonu</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>📱 KivyMD Araçları</h3>
+                        <p>Android için geliştirilmiş, Python tabanlı pratik yardımcı uygulamalar. Platform bağımsız modern arayüz tasarımları.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">KivyMD</span>
+                            <span class="tech-tag">Android</span>
+                        </div>
+                    </div>
+
+                     <div class="project-card">
+                        <h3>🛡️ Pentest Raporları</h3>
+                        <p>Web ve ağ güvenliği üzerine gerçekleştirilen sızma testleri ve güvenlik analizi çalışmaları.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Siber Güvenlik</span>
+                            <span class="tech-tag">Ağ Analizi</span>
+                            <span class="tech-tag">Raporlama</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr style="border:none; border-top: 1px solid #30363d; margin: 3rem 0;">
+
+             <section id="hakkimda">
+                <h2 class="section-title">Hakkımda & Vizyon</h2>
+                <p style="font-size: 1.1rem; color: #c9d1d9;">
+                    Yazılım geliştirme tutkumu siber güvenlik merakımla birleştiriyorum. Amacım sadece kod yazmak değil; 
+                    sürdürülebilir, güvenli ve gerçek dünya problemlerini çözen mimariler kurmak. 
+                    <br><br>
+                    Şu anda tüm odağımı, işletmelerin dijital dönüşümünü hızlandıracak olan <strong>Syncrapy ERP</strong> projesine vermiş durumdayım.
+                </p>
+            </section>
+
+        </main>
         </div>
 
-        <h2>Hakkımda</h2>
-        <p>
-            Yazılım dünyasında modern çözümler üreten ve güvenliği ön planda tutan bir geliştiriciyim. 
-            Python ile otomasyonlar yazıyor, KivyMD ile mobil uygulamalar geliştiriyorum. 
-            Aynı zamanda siber güvenlik alanında "Beyaz Şapkalı Hacker" olarak sistemleri analiz ediyorum.
-        </p>
-
-        <h2>Projeler</h2>
-
-        <div class="project-card">
-            <div class="project-title">🚀 Syncrapy ERP (Geliştirme Aşamasında)</div>
-            <p>Küçük ve orta ölçekli işletmeler için yapay zeka destekli, Python tabanlı yeni nesil ERP yazılımı. Stok takibi, muhasebe ve CRM tek bir çatı altında.</p>
-        </div>
-
-        <div class="project-card">
-            <div class="project-title">📱 Mobil Araçlar</div>
-            <p>KivyMD kullanılarak geliştirilmiş Android tabanlı yardımcı araçlar ve otomasyon uygulamaları.</p>
-        </div>
-
-        <div class="project-card">
-            <div class="project-title">🛡️ Güvenlik Analizleri</div>
-            <p>Web ve Ağ güvenliği üzerine pentest çalışmaları ve güvenlik raporlamaları.</p>
-        </div>
-
-        <footer>
-            <p>2025 © Tüm Hakları Saklıdır.</p>
-            <p>İletişim: <a href="mailto:email@adresin.com">email@adresin.com</a></p>
-        </footer>
-    </div>
-
+</body>
+</html>
 </body>
 </html>
