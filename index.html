@@ -15,8 +15,8 @@
             color: white;
         }
 
-        /* --- LOGO --- */
-        #logo {
+        /* --- MASAÜSTÜ LOGO --- */
+        #desktop-logo {
             position: fixed;
             top: 40px; left: 40px;
             font-family: 'Fira Code', monospace;
@@ -25,9 +25,9 @@
             z-index: 100; pointer-events: none;
             text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
         }
-        #logo span { color: #4facfe; }
+        #desktop-logo span { color: #4facfe; }
 
-        /* --- ŞEFFAF SIDEBAR --- */
+        /* --- SIDEBAR (Masaüstü) --- */
         .sidebar {
             position: fixed;
             left: 40px;
@@ -57,7 +57,73 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
-        /* --- İÇERİK KARTLARI (ORTA) --- */
+        /* --- MOBİL TOPBAR (Başlangıçta Gizli) --- */
+        .mobile-topbar {
+            display: none; /* Masaüstünde gizle */
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-sizing: border-box;
+        }
+
+        .mobile-logo {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem; font-weight: bold;
+            color: #fff; letter-spacing: 1px;
+        }
+        .mobile-logo span { color: #4facfe; }
+
+        .hamburger {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* --- MOBİL MENÜ OVERLAY (Açılır Menü) --- */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 60px; /* Topbar'ın hemen altı */
+            left: 0; width: 100%; height: calc(100% - 60px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 199;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            transform: translateX(100%); /* Başlangıçta sağda gizli */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu-overlay.open {
+            transform: translateX(0); /* Ekrana kaydır */
+        }
+
+        .mobile-link {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: #ccc;
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .mobile-link.active, .mobile-link:hover {
+            color: #4facfe;
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.1);
+        }
+
+
+        /* --- İÇERİK KARTLARI --- */
         #content-container {
             position: fixed;
             top: 50%; left: 50%;
@@ -65,12 +131,12 @@
             z-index: 50;
             width: 80%;
             max-width: 700px;
-            pointer-events: none; /* Tıklanabilirliği kapat, açılınca açarız */
+            pointer-events: none;
         }
 
         .content-card {
-            background: rgba(0, 0, 0, 0.4); /* Yarı saydam siyah */
-            backdrop-filter: blur(10px); /* Buzlu cam efekti */
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 15px;
@@ -80,65 +146,38 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: none; /* Başlangıçta gizli */
+            display: none;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .content-card.active-card {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
+            display: block; opacity: 1; transform: scale(1); pointer-events: auto;
         }
 
         .card-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 10px;
+            font-size: 2.5rem; font-weight: 900; margin-bottom: 10px;
             background: linear-gradient(90deg, #fff, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
-        .card-desc {
-            font-size: 1.1rem;
-            color: #ccc;
-            line-height: 1.6;
-        }
-
+        .card-desc { font-size: 1.1rem; color: #ccc; line-height: 1.6; }
+        
         .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 30px;
-            border: 1px solid #4facfe;
-            color: #4facfe;
-            text-decoration: none;
-            font-family: 'Fira Code', monospace;
-            border-radius: 5px;
-            transition: 0.3s;
+            display: inline-block; margin-top: 20px; padding: 10px 30px;
+            border: 1px solid #4facfe; color: #4facfe; text-decoration: none;
+            font-family: 'Fira Code', monospace; border-radius: 5px; transition: 0.3s;
         }
-        .btn:hover {
-            background: rgba(79, 172, 254, 0.1);
-            box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);
-        }
+        .btn:hover { background: rgba(79, 172, 254, 0.1); box-shadow: 0 0 15px rgba(79, 172, 254, 0.4); }
 
-        /* --- MOBİL --- */
+        /* --- MEDYA SORGULARI (RESPONSIVE) --- */
         @media (max-width: 768px) {
-            .sidebar {
-                left: 0; bottom: 0; top: auto;
-                width: 100%;
-                transform: none;
-                flex-direction: row;
-                justify-content: center;
-                background: rgba(0,0,0,0.8);
-                padding: 15px 0;
-                gap: 15px;
-                border-top: 1px solid #333;
-            }
-            .menu-item { font-size: 0.8rem; padding: 0; border: none; }
-            .menu-item.active { padding-left: 0; border-bottom: 2px solid #4facfe; border-left: none; }
-            #logo { top: 20px; left: 20px; font-size: 1.2rem; }
-            .content-card { width: 90%; padding: 20px; }
+            /* Masaüstü öğelerini gizle */
+            #desktop-logo, .sidebar { display: none; }
+
+            /* Mobil öğeleri göster */
+            .mobile-topbar { display: flex; }
+
+            /* İçerik ayarları */
+            .content-card { width: 90%; padding: 25px; top: 20px; } /* Mobilde biraz yukarı al */
             .card-title { font-size: 1.8rem; }
         }
 
@@ -162,9 +201,7 @@
 
     <div id="loading"><div class="spinner"></div></div>
 
-    <div id="logo">TURK1453<span>.</span></div>
-
-    <canvas id="webgl"></canvas>
+    <div id="desktop-logo">TURK1453<span>.</span></div>
 
     <nav class="sidebar">
         <div class="menu-item active" onclick="showSection('home')">ANA EKRAN</div>
@@ -173,67 +210,64 @@
         <div class="menu-item" onclick="showSection('contact')">İLETİŞİM</div>
     </nav>
 
+    <div class="mobile-topbar">
+        <div class="mobile-logo">TURK1453<span>.</span></div>
+        <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-link active" onclick="showSection('home')">ANA EKRAN</div>
+        <div class="mobile-link" onclick="showSection('syncrapy')">SYNCRAPY</div>
+        <div class="mobile-link" onclick="showSection('security')">GÜVENLİK</div>
+        <div class="mobile-link" onclick="showSection('contact')">İLETİŞİM</div>
+    </div>
+
+    <canvas id="webgl"></canvas>
+
     <div id="content-container">
-        
         <div id="home" class="content-card active-card">
             <h1 class="card-title">KÜRESEL VİZYON</h1>
-            <p class="card-desc">
-                Dijital dünyanın sınırlarını kaldırıyoruz.<br>
-                Yapay zeka, siber güvenlik ve modern yazılım mimarisiyle<br>
-                geleceği bugünden inşa ediyoruz.
-            </p>
+            <p class="card-desc">Dijital dünyanın sınırlarını kaldırıyoruz.<br>Geleceği bugünden inşa ediyoruz.</p>
         </div>
-
         <div id="syncrapy" class="content-card">
             <h1 class="card-title">SYNCRAPY ERP</h1>
-            <p class="card-desc">
-                İşletmeler için geliştirdiğimiz <strong>AI Destekli</strong> yönetim sistemi.<br>
-                Stoktan muhasebeye, CRM'den analize kadar her şey<br>
-                tek bir bulut platformunda.
-            </p>
+            <p class="card-desc">İşletmeler için AI destekli yönetim sistemi.<br>Stok, Muhasebe ve CRM tek platformda.</p>
             <a href="#" class="btn">DEMO İNCELE</a>
         </div>
-
         <div id="security" class="content-card">
             <h1 class="card-title">SİBER SAVUNMA</h1>
-            <p class="card-desc">
-                Sistemlerinizi sadece korumuyoruz, onları saldırgan gibi düşünüp test ediyoruz.<br>
-                Ağ güvenliği, sızma testleri ve güvenlik mimarisi.
-            </p>
+            <p class="card-desc">Ağ güvenliği, sızma testleri ve güvenlik mimarisi.<br>Sistemlerinizi zırhlandırıyoruz.</p>
         </div>
-
         <div id="contact" class="content-card">
             <h1 class="card-title">BAĞLANTI</h1>
-            <p class="card-desc">
-                Yeni projeler ve işbirlikleri için:<br><br>
-                <strong>Email:</strong> contact@turk1453.com<br>
-                <strong>GitHub:</strong> github.com/turk1453
-            </p>
+            <p class="card-desc">Email: contact@turk1453.com<br>GitHub: github.com/turk1453</p>
         </div>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // --- 1. SİTE MANTIĞI (Menü Geçişleri) ---
+        // --- 1. SİTE MANTIĞI ---
         function showSection(id) {
-            // Aktif menü öğesini güncelle
+            // Masaüstü Menü Güncelle
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Kartları gizle
+            // Bu fonksiyonu hangi element çağırdıysa onu bulmak zor olabilir, basitçe id eşleşmesi yapalım:
+            // (Basitleştirmek için loop ile kontrol ediyoruz)
+            
+            // Kartları Gizle/Göster
             document.querySelectorAll('.content-card').forEach(el => el.classList.remove('active-card'));
-
-            // Seçileni göster
             const target = document.getElementById(id);
-            // Küçük bir gecikme ile göster (Animasyon için)
-            setTimeout(() => {
-                target.classList.add('active-card');
-            }, 100);
+            setTimeout(() => target.classList.add('active-card'), 100);
+
+            // Mobil menüyü kapat (Eğer açıksa)
+            document.getElementById('mobileMenu').classList.remove('open');
         }
 
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('open');
+        }
 
-        // --- 2. THREE.JS (3D DÜNYA) ---
+        // --- 2. THREE.JS ---
         const loadingManager = new THREE.LoadingManager();
         loadingManager.onLoad = () => {
             const loading = document.getElementById('loading');
@@ -250,7 +284,6 @@
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.outputEncoding = THREE.sRGBEncoding;
 
-        // Işıklar
         scene.add(new THREE.AmbientLight(0xffffff, 0.2));
         const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
         sunLight.position.set(5, 3, 5);
@@ -259,56 +292,49 @@
         rimLight.position.set(-5, 5, -5);
         scene.add(rimLight);
 
-        // Dünya Grubu
         const earthGroup = new THREE.Group();
         scene.add(earthGroup);
-
         const texLoader = new THREE.TextureLoader(loadingManager);
 
-        // Küre
-        const earthMat = new THREE.MeshPhongMaterial({
-            map: texLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'),
-            bumpMap: texLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png'),
-            bumpScale: 0.15,
-            specularMap: texLoader.load('https://unpkg.com/three-globe/example/img/earth-water.png'),
-            specular: new THREE.Color(0x444444),
-            shininess: 25
-        });
-        const earth = new THREE.Mesh(new THREE.SphereGeometry(8, 64, 64), earthMat);
+        const earth = new THREE.Mesh(
+            new THREE.SphereGeometry(8, 64, 64),
+            new THREE.MeshPhongMaterial({
+                map: texLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'),
+                bumpMap: texLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png'),
+                bumpScale: 0.15,
+                specularMap: texLoader.load('https://unpkg.com/three-globe/example/img/earth-water.png'),
+                specular: new THREE.Color(0x444444), shininess: 25
+            })
+        );
         earthGroup.add(earth);
 
-        // Bulutlar
-        const cloudMat = new THREE.MeshPhongMaterial({
-            map: texLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png'),
-            transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
-        });
-        const clouds = new THREE.Mesh(new THREE.SphereGeometry(8.1, 64, 64), cloudMat);
+        const clouds = new THREE.Mesh(
+            new THREE.SphereGeometry(8.1, 64, 64),
+            new THREE.MeshPhongMaterial({
+                map: texLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png'),
+                transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
+            })
+        );
         earthGroup.add(clouds);
 
-        // Yıldızlar
         const starGeo = new THREE.BufferGeometry();
         const starCount = 2000;
         const starPos = new Float32Array(starCount * 3);
         for(let i=0; i<starCount*3; i++) starPos[i] = (Math.random() - 0.5) * 200;
         starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-        const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({size: 0.1, color: 0xffffff, transparent: true, opacity: 0.8}));
-        scene.add(stars);
+        scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({size: 0.1, color: 0xffffff, transparent: true, opacity: 0.8})));
 
-        // Kamera Konumu (Tam Merkez)
         camera.position.z = 22;
 
-        // Animasyon
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
-            earth.rotation.y += 0.0008; // Yavaş dönüş
+            earth.rotation.y += 0.0008;
             clouds.rotation.y += 0.0011;
-            stars.rotation.y -= 0.0002;
             renderer.render(scene, camera);
         }
         animate();
 
-        // Responsive
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
