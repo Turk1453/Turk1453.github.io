@@ -10,7 +10,7 @@
         body { 
             margin: 0; 
             overflow: hidden; 
-            background-color: #050505; /* Tam siyah değil, çok koyu gri (derinlik için) */
+            background-color: #020202; /* Derin Uzay Siyahı */
             font-family: 'Inter', sans-serif;
             color: white;
         }
@@ -18,87 +18,57 @@
         /* --- LOGO --- */
         #logo {
             position: absolute;
-            top: 30px;
-            left: 50px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #fff;
-            z-index: 100;
-            pointer-events: none;
+            top: 30px; left: 50px;
+            font-size: 1.4rem; font-weight: 900;
+            letter-spacing: 2px; color: #fff;
+            z-index: 100; pointer-events: none;
         }
         #logo span { color: #4facfe; }
 
-        /* --- İÇERİK YAZILARI --- */
+        /* --- İÇERİK --- */
         #content-overlay {
             position: absolute;
-            top: 50%;
-            left: 10%; 
+            top: 50%; left: 8%; 
             transform: translateY(-50%);
-            z-index: 10;
-            pointer-events: none;
-            max-width: 500px;
+            z-index: 10; pointer-events: none;
+            max-width: 550px;
         }
 
         .section-title {
-            font-size: 3rem; /* Fontu biraz küçülttük, daha kibar durması için */
-            font-weight: 900;
-            margin: 0;
-            color: #fff;
-            opacity: 0;
-            transform: translateY(30px);
-            position: absolute;
-            top: 0; left: 0;
+            font-size: 3.5rem; font-weight: 900;
+            margin: 0; color: #fff;
+            opacity: 0; transform: translateY(40px);
+            position: absolute; top: 0; left: 0;
             line-height: 1.1;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Okunabilirlik için gölge */
+            text-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         
         .section-desc {
-            font-size: 1.1rem;
-            margin-top: 20px;
-            color: #b0b0b0;
-            opacity: 0;
-            transform: translateY(30px);
-            position: absolute;
-            top: 110px; 
-            left: 0;
-            line-height: 1.6;
-            font-weight: 300;
-            max-width: 400px;
+            font-size: 1.1rem; margin-top: 25px;
+            color: #ccc; opacity: 0;
+            transform: translateY(40px);
+            position: absolute; top: 130px; left: 0;
+            line-height: 1.6; font-weight: 300;
+            max-width: 450px;
+            background: rgba(0,0,0,0.3); /* Yazı arkasına hafif karartma */
+            padding: 10px; border-radius: 5px;
+            backdrop-filter: blur(2px);
         }
 
         .active-text {
             opacity: 1 !important;
             transform: translateY(0) !important;
-            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* --- MOBİL UYUMLULUK (RESPONSIVE) --- */
+        /* --- MOBİL --- */
         @media (max-width: 768px) {
             #logo { left: 20px; top: 20px; font-size: 1.2rem; }
-            
             #content-overlay {
-                left: 5%;
-                width: 90%;
-                top: 40%; /* Mobilde yazılar biraz daha yukarıda olsun */
-                text-align: center; /* Mobilde ortala */
+                left: 5%; width: 90%; top: 45%; text-align: center;
             }
-
-            .section-title {
-                font-size: 2.2rem; /* Mobilde başlık daha küçük */
-                width: 100%;
-                left: 0; right: 0; margin: auto;
-            }
-
-            .section-desc {
-                font-size: 1rem;
-                top: 90px;
-                width: 100%;
-                max-width: 100%;
-                left: 0; right: 0; margin: auto;
-            }
-
-            /* Scroll uyarısı mobilde biraz daha yukarı */
+            .section-title { font-size: 2.5rem; width: 100%; }
+            .section-desc { font-size: 1rem; top: 100px; width: 100%; max-width: 100%; }
             .scroll-hint { bottom: 80px; }
         }
 
@@ -106,43 +76,55 @@
         #loading {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: #000; z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            color: #4facfe; font-weight: bold; letter-spacing: 2px;
-            transition: opacity 0.5s;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.8s;
         }
+        .loader-text {
+            color: #4facfe; font-weight: bold; letter-spacing: 3px;
+            margin-top: 15px; font-size: 0.9rem;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(79, 172, 254, 0.3);
+            border-radius: 50%;
+            border-top-color: #4facfe;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .scroll-hint {
-            position: absolute; bottom: 30px; left: 50%;
-            transform: translateX(-50%); font-size: 0.8rem;
-            color: #fff; opacity: 0.5;
-            animation: bounce 2s infinite; letter-spacing: 3px;
-            pointer-events: none;
+            position: absolute; bottom: 40px; left: 50%;
+            transform: translateX(-50%); font-size: 0.75rem;
+            color: rgba(255,255,255,0.5); letter-spacing: 4px;
+            animation: pulse 2s infinite; pointer-events: none;
         }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
-        }
+        @keyframes pulse { 0%, 100% {opacity: 0.3;} 50% {opacity: 0.8;} }
+
     </style>
 </head>
 <body>
 
-    <div id="loading">SİSTEM BAŞLATILIYOR...</div>
-    <div id="logo">Banane amına goyim Top mehmet<span>.</span></div>
+    <div id="loading">
+        <div class="spinner"></div>
+        <div class="loader-text">DÜNYA OLUŞTURULUYOR...</div>
+    </div>
+
+    <div id="logo">TURK1453<span>.</span></div>
     <canvas id="webgl"></canvas>
 
     <div id="content-overlay">
-        <h1 class="section-title active-text" id="t-0">KÜRESEL<br>VİZYON</h1>
-        <p class="section-desc active-text" id="d-0">Teknoloji ve güvenliğin kesiştiği nokta.<br>Geleceği inşa etmek için kaydırın.</p>
+        <h1 class="section-title active-text" id="t-0">SINIRSIZ<br>DÜNYA</h1>
+        <p class="section-desc active-text" id="d-0">Dijital sınırlar kalktığında, gerçek potansiyel ortaya çıkar.<br>Geleceği kodlamaya buradan başlıyoruz.</p>
 
         <h1 class="section-title" id="t-1">SYNCRAPY<br>ERP</h1>
-        <p class="section-desc" id="d-1">Python gücüyle çalışan, yapay zeka destekli<br>yeni nesil işletme yönetim sistemi.</p>
+        <p class="section-desc" id="d-1">Karmaşık iş süreçlerini yapay zeka ile basitleştiren,<br>bulut tabanlı yönetim ekosistemi.</p>
 
-        <h1 class="section-title" id="t-2">SİBER<br>SAVUNMA</h1>
-        <p class="section-desc" id="d-2">Gelişmiş tehdit analizi ve sızma testleri ile<br>dijital varlıklarınızı koruma altına alın.</p>
+        <h1 class="section-title" id="t-2">SİBER<br>GÜVENLİK</h1>
+        <p class="section-desc" id="d-2">Görünmeyen tehditleri görüyor, sistemlerinizi<br>en sofistike saldırılara karşı güçlendiriyoruz.</p>
 
         <h1 class="section-title" id="t-3">İLETİŞİM<br>& PROJE</h1>
-        <p class="section-desc" id="d-3">Fikirlerinizi hayata geçirmek için:<br>contact@turk1453.com</p>
+        <p class="section-desc" id="d-3">Büyük fikirler, bir mesajla başlar.<br>contact@turk1453.com</p>
     </div>
 
     <div class="scroll-hint">KAYDIRIN</div>
@@ -151,11 +133,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <script>
+        // --- ASSET YÖNETİMİ ---
         const loadingManager = new THREE.LoadingManager();
         loadingManager.onLoad = () => {
             const loadingScreen = document.getElementById('loading');
             loadingScreen.style.opacity = '0';
-            setTimeout(() => loadingScreen.remove(), 500);
+            setTimeout(() => loadingScreen.remove(), 800);
         };
 
         // --- 1. SAHNE ---
@@ -164,81 +147,95 @@
         const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#webgl'), antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
+        // Tonlama ayarı (Renklerin patlamasını engeller, sinematik yapar)
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.outputEncoding = THREE.sRGBEncoding;
 
-        // --- 2. AYDINLATMA (Daha dramatik) ---
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.8); // Ortam ışığı artırıldı
+        // --- 2. IŞIKLANDIRMA (Uzay Gerçekçiliği) ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // Çok az ortam ışığı
         scene.add(ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
-        sunLight.position.set(10, 5, 10); // Işık sağ üstten
+        // Güneş (Ana Işık Kaynağı)
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        sunLight.position.set(5, 3, 5);
         scene.add(sunLight);
 
-        const rimLight = new THREE.DirectionalLight(0x4facfe, 0.8); // Arkadan mavi kenar ışığı (Kontur)
-        rimLight.position.set(-5, 0, -10);
-        scene.add(rimLight);
+        // Atmosferik Işıma (Arka taraftan vuran mavi ışık)
+        const atmosphereLight = new THREE.SpotLight(0x4facfe, 1.5);
+        atmosphereLight.position.set(-5, 5, -2);
+        scene.add(atmosphereLight);
 
-        // --- 3. DÜNYA (Boyut Küçültüldü) ---
+        // --- 3. DÜNYA VE ATMOSFER GRUBU ---
+        const earthGroup = new THREE.Group();
+        scene.add(earthGroup);
+
         const textureLoader = new THREE.TextureLoader(loadingManager);
-        const earthMap = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg');
-        const earthBump = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png');
-        const earthSpec = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-water.png');
 
-        // YARIÇAPI KÜÇÜLTTÜK: 10 yerine 6.5 yaptık.
-        const geometry = new THREE.SphereGeometry(6.5, 64, 64);
-        
-        const material = new THREE.MeshPhongMaterial({
-            map: earthMap,
-            bumpMap: earthBump,
+        // A) Yeryüzü Küresi
+        const earthGeo = new THREE.SphereGeometry(6.5, 64, 64);
+        const earthMat = new THREE.MeshPhongMaterial({
+            map: textureLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'),
+            bumpMap: textureLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png'),
             bumpScale: 0.1,
-            specularMap: earthSpec,
-            specular: new THREE.Color('#222222'),
-            shininess: 40
+            specularMap: textureLoader.load('https://unpkg.com/three-globe/example/img/earth-water.png'),
+            specular: new THREE.Color(0x333333),
+            shininess: 15
         });
+        const earth = new THREE.Mesh(earthGeo, earthMat);
+        earthGroup.add(earth);
 
-        const earth = new THREE.Mesh(geometry, material);
-        scene.add(earth);
+        // B) Bulut Katmanı (Dünyadan biraz daha büyük şeffaf küre)
+        const cloudGeo = new THREE.SphereGeometry(6.6, 64, 64);
+        const cloudMat = new THREE.MeshPhongMaterial({
+            map: textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png'),
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            side: THREE.DoubleSide
+        });
+        const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+        earthGroup.add(clouds);
 
-        // --- YILDIZLAR ---
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 1000;
-        const posArray = new Float32Array(starsCount * 3);
-        for(let i=0; i<starsCount*3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 120;
+        // --- 4. YILDIZLAR ---
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 2000;
+        const starPos = new Float32Array(starCount * 3);
+        for(let i=0; i<starCount*3; i++) {
+            starPos[i] = (Math.random() - 0.5) * 200;
         }
-        starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const starsMaterial = new THREE.PointsMaterial({size: 0.04, color: 0xffffff, transparent: true, opacity: 0.6});
-        const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(starsMesh);
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({size: 0.1, color: 0xffffff, transparent: true, opacity: 0.8});
+        const stars = new THREE.Points(starGeo, starMat);
+        scene.add(stars);
 
-        // --- 4. POZİSYONLAMA (Masaüstü vs Mobil) ---
-        
-        function updateCameraPosition() {
+
+        // --- 5. KAMERA AYARLARI ---
+        function updateLayout() {
             if(window.innerWidth < 768) {
-                // MOBİL AYARLARI
-                camera.position.z = 25; // Kamerayı uzaklaştır (Dünya küçük görünsün)
-                camera.position.x = 0;  // Dünyayı ortala
-                earth.position.y = -3;  // Dünyayı biraz aşağı çek (Yazılar yukarıda kalsın)
+                // Mobil
+                camera.position.set(0, 0, 24);
+                earthGroup.position.set(0, -3.5, 0);
             } else {
-                // MASAÜSTÜ AYARLARI
-                camera.position.z = 18; // Normal mesafe
-                camera.position.x = 6;  // Kamerayı sağa kaydır (Dünya sola kaysın)
-                earth.position.y = 0;   // Dikeyde ortala
+                // Masaüstü
+                camera.position.set(0, 0, 19);
+                earthGroup.position.set(6, 0, 0); // Sağa yasla
             }
         }
-        updateCameraPosition(); // Başlangıçta çalıştır
+        updateLayout();
 
-        // --- 5. ETKİLEŞİM ---
+        // --- 6. ANİMASYON VE SCROLL ---
         let currentSection = 0;
         const totalSections = 4;
         let isAnimating = false;
 
+        // Mouse Tekerleği
         window.addEventListener('wheel', (event) => {
             if (isAnimating) return;
             let direction = event.deltaY > 0 ? 1 : -1;
             changeSection(currentSection + direction);
         });
 
+        // Mobil Dokunmatik
         let touchStartY = 0;
         window.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
         window.addEventListener('touchend', e => {
@@ -252,26 +249,9 @@
             if (index < 0 || index >= totalSections) return;
             isAnimating = true;
 
-            // Yazı Animasyonları
-            gsap.to(`#t-${currentSection}`, {opacity: 0, y: 30, duration: 0.6});
-            gsap.to(`#d-${currentSection}`, {opacity: 0, y: 30, duration: 0.6});
-
-            // Dünya Dönüşü
-            let targetRotation = index * (Math.PI / 2);
-            gsap.to(earth.rotation, {
-                y: targetRotation,
-                x: (Math.random() - 0.5) * 0.3,
-                duration: 1.5,
-                ease: "power2.inOut"
-            });
-
-            // Kamera Hareketi (Zoom efekti)
-            // Mobilde farklı, masaüstünde farklı zoom davranışı
-            let baseZ = window.innerWidth < 768 ? 25 : 18;
-            gsap.to(camera.position, {
-                z: baseZ - (index * 0.5), 
-                duration: 1.5
-            });
+            // Yazıları Değiştir (Dünya'nın dönüşüyle oynama!)
+            gsap.to(`#t-${currentSection}`, {opacity: 0, y: 40, duration: 0.6, ease: "power2.in"});
+            gsap.to(`#d-${currentSection}`, {opacity: 0, y: 40, duration: 0.6, ease: "power2.in", delay: 0.1});
 
             currentSection = index;
 
@@ -284,20 +264,31 @@
                 title.classList.add('active-text');
                 desc.classList.add('active-text');
                 
-                // GSAP ile sıfırdan getir
-                gsap.fromTo(title, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6});
-                gsap.fromTo(desc, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, delay: 0.1});
+                // Yeni yazıyı getir
+                gsap.fromTo(title, {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.8, ease: "power2.out"});
+                gsap.fromTo(desc, {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.2});
 
                 isAnimating = false;
-            }, 800);
+            }, 700);
         }
 
+        // --- SÜREKLİ DÖNGÜ ---
         const clock = new THREE.Clock();
+        
         function animate() {
             requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
-            earth.rotation.y += 0.0008; // Kendi kendine yavaş dönüş
-            starsMesh.rotation.y = -elapsedTime * 0.02;
+            const delta = clock.getDelta();
+
+            // DÜNYA KENDİ HALİNDE DÖNSÜN (Scroll'dan bağımsız)
+            earth.rotation.y += 0.001; // Yavaş ve asil dönüş
+            
+            // BULUTLAR DAHA HIZLI DÖNSÜN (Gerçekçilik için)
+            clouds.rotation.y += 0.0013;
+            clouds.rotation.x += 0.0001; // Hafif yukarı aşağı hareket
+
+            // Yıldızlar çok yavaş kaysın
+            stars.rotation.y -= 0.0002;
+
             renderer.render(scene, camera);
         }
         animate();
@@ -306,9 +297,9 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            updateCameraPosition(); // Boyut değişince pozisyonu tekrar ayarla
+            updateLayout();
         });
+
     </script>
 </body>
 </html>
-
