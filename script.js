@@ -81,7 +81,7 @@ function updateLayout() {
     else {
         // --- 3. MOBİL (< 768px) ---
         camera.position.set(0, 0, 42); 
-        group.position.set(0, -4, 0); 
+        group.position.set(0, -8, 0); 
         group.scale.set(0.8, 0.8, 0.8);
     }
 }
