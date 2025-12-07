@@ -68,21 +68,21 @@ function updateLayout() {
         // --- 1. MASAÜSTÜ (> 1200px) ---
         // Yazılar Ortada, Dünya SAĞDA (Arka plan gibi)
         camera.position.set(0, 0, 25);
-        group.position.set(0, 0, 0); // Dünyayı iyice sağa çektim ki yazıların üstüne binmesin
+        group.position.set(0, 0, 0);
         group.scale.set(1, 1, 1);
     } 
     else if (width <= 1200 && width > 768) {
         // --- 2. TABLET (768px - 1200px) ---
         // Dünya ortada ve aşağıda
         camera.position.set(0, 0, 30); 
-        group.position.set(0, 0, 0);  // Aşağı çek
+        group.position.set(0, 0, 0);
         group.scale.set(0.9, 0.9, 0.9); 
     } 
     else {
         // --- 3. MOBİL (< 768px) ---
         camera.position.set(0, 0, 42); 
-        group.position.set(0, -8, 0); 
-        group.scale.set(0.8, 0.8, 0.8);
+        group.position.set(0, 0, 0); 
+        group.scale.set(1, 1, 1);
     }
 }
 
