@@ -1,20 +1,21 @@
-/* --- EN ÖNEMLİ DÜZELTME (Global Reset) --- */
+/* --- GLOBAL AYARLAR --- */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* BU SATIR TAŞMAYI ENGELLER */
+    box-sizing: border-box; /* Taşmaları engeller */
 }
 
 :root {
     --primary: #3b82f6;
-    --glass: rgba(10, 10, 20, 0.85); /* Mobilde daha okunaklı olsun diye koyulaştırdık */
-    --border: rgba(255, 255, 255, 0.15);
+    --glass: rgba(10, 10, 20, 0.7); /* Kart rengi */
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
     --text-main: #ffffff;
     --text-muted: #94a3b8;
 }
 
 body { 
-    overflow: hidden; 
+    overflow: hidden; /* Sayfa asla kaymasın (Dünya sabit) */
     background-color: #02040a; 
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
@@ -27,101 +28,104 @@ body {
     font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--primary);
 }
 
-/* --- ORTAK --- */
-.headline { font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
-.sub-headline { color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 30px; }
+/* --- ORTAK BİLEŞENLER --- */
+.headline { font-weight: 800; line-height: 1.1; margin-bottom: 10px; letter-spacing: -1px; }
+.sub-headline { color: var(--text-muted); line-height: 1.4; font-weight: 300; margin-bottom: 25px; }
 .btn-primary {
     display: inline-block; padding: 12px 30px; background: var(--primary);
     color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600;
     transition: 0.3s; cursor: pointer;
 }
 
-/* İçerik Kutusu */
+/* --- ANA İÇERİK KUTUSU (Scroll Mantığı Burada) --- */
 #content-container {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    z-index: 50; pointer-events: none;
-    text-align: center; width: 80%;
+    position: fixed; 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 50; 
+    pointer-events: none; /* Tıklamayı engelle (arkaya geçsin) */
+    width: 100%; /* Kapsayıcı genişliği */
+    height: 100%; /* Kapsayıcı yüksekliği */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .content-card {
-    display: none; opacity: 0; transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none; 
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    
+    /* CAM PANEL AYARLARI */
+    background: rgba(0, 0, 0, 0.6); /* Arka planı hafif karart */
+    backdrop-filter: blur(12px); /* Buzlu cam */
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    
+    /* SCROLL ÇÖZÜMÜ */
+    max-height: 85vh; /* Ekranın %85'inden büyük olmasın */
+    overflow-y: auto; /* İçerik taşarsa SADECE KUTU kaydırılsın */
+    pointer-events: auto; /* Kutunun içine tıklanabilsin */
+    
+    /* Genişlik Ayarı */
+    width: 90%; 
+    max-width: 1100px; /* Çok geniş ekranlarda yayılmasın */
+    text-align: center;
 }
-.content-card.active-card { display: block; opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-/* Hizmetler Grid */
-.services-grid { display: grid; gap: 20px; margin-top: 30px; }
-.service-box {
-    background: var(--glass); border: 1px solid var(--border);
-    padding: 20px; border-radius: 8px; text-align: left;
-}
-.service-icon { font-size: 1.8rem; margin-bottom: 10px; color: var(--primary); font-family: sans-serif; } 
-.service-title { font-weight: 700; margin-bottom: 5px; font-size: 1.1rem; }
-.service-desc { font-size: 0.9rem; color: var(--text-muted); }
+.content-card.active-card { display: block; opacity: 1; transform: translateY(0); }
 
-/* --- HİZMETLER ALANI (SADE & ŞIK) --- */
+/* Scrollbar Tasarımı (Kutu içi kaydırma çubuğu şık olsun) */
+.content-card::-webkit-scrollbar { width: 8px; }
+.content-card::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+.content-card::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
+
+/* --- HİZMETLER KARTLARI (GRID SİSTEMİ) --- */
 .services-wrapper {
     display: flex;
-    flex-wrap: wrap; /* Sığmayan aşağı kaysın */
-    justify-content: center; /* Ortala */
-    gap: 20px; /* Kartlar arası boşluk */
-    margin-top: 20px;
+    flex-wrap: wrap; /* Sığmayan aşağı insin */
+    justify-content: center; /* ORTALA (Sola kaymayı çözer) */
+    gap: 20px;
+    width: 100%;
 }
 
 .service-card {
-    background: rgba(255, 255, 255, 0.03); /* Çok hafif beyaz */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 25px;
-    width: 280px; /* Kart genişliği */
+    /* Kart Boyutlandırma */
+    flex: 1 1 280px; /* Esnek genişlik: En az 280px olsun, yer varsa büyüsün */
+    max-width: 350px; /* Ama 350px'ten fazla büyümesin */
     text-align: left;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-}
-
-/* --- HOVER EFEKTLERİ (Mouse üzerine gelince) --- */
-.service-card:hover {
-    transform: translateY(-10px); /* Yukarı kalksın */
-    background: rgba(255, 255, 255, 0.07);
-    border-color: var(--primary); /* Kenarlık mavi olsun */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-.service-card:hover .icon-box {
-    transform: scale(1.1) rotate(5deg); /* İkon hafif büyüsün ve dönsün */
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-}
-
-/* İkon Kutusu */
-.icon-box {
-    width: 50px; height: 50px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
     transition: 0.3s;
 }
 
-/* Yazı Stilleri */
-.service-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.service-card p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.5;
+.icon-box {
+    width: 50px; height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 15px;
+    color: var(--primary);
 }
+
+.service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+.service-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+
+/* =========================================
+   RESPONSIVE (EKRAN AYARLARI)
+   ========================================= */
 
 /* --- 1. MASAÜSTÜ (> 1200px) --- */
 @media (min-width: 1201px) {
@@ -143,99 +147,52 @@ body {
 
     .mobile-topbar, .mobile-menu-overlay { display: none !important; }
 
-    #content-container { width: 60%; left: 50%; } 
-    .headline { font-size: 4rem; }
-    .services-grid { grid-template-columns: repeat(3, 1fr); } 
+    /* Masaüstünde içerik biraz solda dursun (Dünya sağda olduğu için) */
+    .content-card { 
+        margin-left: 20%; 
+        width: 50%; 
+    }
 }
 
-/* --- 2. TABLET VE MOBİL (1200px ALTINDAKİ HER ŞEY) --- */
-/* Hem Telefon hem Tablet için Topbar'ı zorunlu kılıyoruz */
+/* --- 2. TABLET ve MOBİL (1200px altı) --- */
 @media (max-width: 1200px) {
     #desktop-logo, .sidebar { display: none !important; }
 
-    /* TOPBAR DÜZELTMESİ */
+    /* Topbar Ayarları */
     .mobile-topbar {
-        display: flex !important; /* Kesinlikle göster */
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        right: 0; /* Genişliği 100% yerine left-right 0 yaparak taşmayı engelliyoruz */
-        height: 70px;
-        background: rgba(2, 4, 10, 0.95); 
-        backdrop-filter: blur(15px);
-        z-index: 9000; /* Z-Index'i çok yükselttik, her şeyin üstünde olsun */
-        align-items: center; 
-        justify-content: space-between; /* Logo sola, Menü sağa */
-        padding: 0 20px; /* Kenarlardan boşluk */
-        border-bottom: 1px solid var(--border);
+        display: flex !important;
+        position: fixed; top: 0; left: 0; right: 0; height: 70px;
+        background: rgba(2, 4, 10, 0.95); backdrop-filter: blur(10px);
+        z-index: 9000; align-items: center; justify-content: space-between;
+        padding: 0 25px; border-bottom: 1px solid var(--border);
     }
+    .mobile-logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.3rem; color: #fff; }
+    .hamburger { font-size: 2rem; cursor: pointer; color: #fff; padding: 5px; }
 
-    .mobile-logo { 
-        font-family: 'JetBrains Mono', monospace; 
-        font-weight: 700; 
-        font-size: 1.3rem; 
-        color: #fff;
-        z-index: 9001;
+    /* Mobilde İçerik Ayarı */
+    .content-card {
+        width: 90%; 
+        margin-top: 60px; /* Topbar'ın altında kalsın */
+        padding: 25px; /* İç boşluğu azalt */
     }
     
-    .hamburger { 
-        font-size: 2rem; 
-        cursor: pointer; 
-        color: #fff; 
-        z-index: 9001;
-        padding: 10px; /* Tıklama alanı genişlesin */
-        display: block;
-    }
-
-    #content-container { 
-        width: 85%; 
-        top: 55%; /* Topbar'ın altında kalsın diye biraz aşağı */
-    }
+    .headline { font-size: 2rem; }
     
-    .headline { font-size: 2.5rem; }
+    /* Hizmet Kartları Mobilde %100 genişlik olsun */
+    .service-card {
+        flex: 1 1 100%; 
+        max-width: 100%;
+    }
 }
 
-/* Tablet Özel (768-1200 arası) Grid Ayarı */
-@media (min-width: 768px) and (max-width: 1200px) {
-    .services-grid { grid-template-columns: repeat(2, 1fr); } /* Tablette 2 sütun */
-    .headline { font-size: 3rem; }
-}
-
-/* --- MOBİL MENÜ OVERLAY --- */
+/* --- MOBİL MENÜ --- */
 .mobile-menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: #02040a; z-index: 8999; /* Topbar'ın hemen altında */
+    background: #02040a; z-index: 8999;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
-    transform: translateX(100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(100%); transition: 0.4s;
 }
 .mobile-menu-overlay.open { transform: translateX(0); }
-
 .mobile-link { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); cursor: pointer; }
 .mobile-link:hover, .mobile-link.active { color: var(--primary); }
-
-/* Menü Kapatma Çarpısı */
-.close-menu { 
-    position: absolute; top: 20px; right: 25px; 
-    font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9002;
-}
-
-/* --- RESPONSIVE AYARLARI --- */
-
-/* Masaüstü (Geniş Ekran) */
-@media (min-width: 1200px) {
-    #services {
-        width: 65% !important; /* Biraz daha geniş alan */
-        max-width: 1100px;
-    }
-}
-
-/* Tablet ve Mobil */
-@media (max-width: 1199px) {
-    .services-wrapper {
-        gap: 15px;
-    }
-    .service-card {
-        width: 100%; /* Mobilde tam genişlik */
-        max-width: 320px; /* Ama çok da büyümesin */
-    }
-}
+.close-menu { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9001;}
