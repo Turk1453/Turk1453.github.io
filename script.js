@@ -68,21 +68,21 @@ function updateLayout() {
         // --- 1. MASAÜSTÜ (> 1200px) ---
         // Dünya sağda, Yazılar solda
         camera.position.set(0, 0, 25);
-        group.position.set(7, 0, 0); // Sağa Kaydır
+        group.position.set(0, 0, 0); // Sağa Kaydır
         group.scale.set(1, 1, 1);
     } 
     else if (width <= 1200 && width > 768) {
         // --- 2. TABLET (768px - 1200px) ---
         // Dünya ortada ama aşağıda, Yazılar ortada
         camera.position.set(0, 0, 30); // Biraz uzaklaş
-        group.position.set(0, -6, 0);  // Dünyayı aşağı çek
+        group.position.set(0, 0, 0);  // Dünyayı aşağı çek
         group.scale.set(0.9, 0.9, 0.9); // Biraz küçült
     } 
     else {
         // --- 3. MOBİL (< 768px) ---
         // Dünya daha aşağıda, Yazılar büyük
         camera.position.set(0, 0, 32); // Daha da uzaklaş
-        group.position.set(0, -7, 0);  // İyice aşağı çek
+        group.position.set(0, -4, 0);  // İyice aşağı çek
         group.scale.set(0.8, 0.8, 0.8);
     }
 }
