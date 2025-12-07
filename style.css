@@ -7,7 +7,8 @@
 
 :root {
     --primary: #3b82f6;
-    --glass-card: rgba(15, 15, 25, 0.85); /* Sadece Hizmet Kartları için */
+    /* Kartların Rengi (Buzlu Cam Efekti Sadece Kartlarda Olacak) */
+    --card-bg: rgba(20, 20, 35, 0.7); 
     --border: rgba(255, 255, 255, 0.15);
     --text-main: #ffffff;
     --text-muted: #94a3b8;
@@ -27,10 +28,10 @@ body {
     font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--primary);
 }
 
-/* --- ORTAK --- */
+/* --- ORTAK YAZILAR --- */
 .headline { 
     font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.8); /* Yazı okunabilirliği için gölge */
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
 }
 .sub-headline { 
     color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 30px; 
@@ -50,7 +51,7 @@ body {
     top: 50%; left: 50%; 
     transform: translate(-50%, -50%);
     z-index: 50; 
-    pointer-events: none; 
+    pointer-events: none; /* Boşluklara tıklayınca arkaya geçsin */
     width: 100%; height: 100%;
     display: flex;
     justify-content: center;
@@ -63,64 +64,83 @@ body {
     transform: translateY(30px);
     transition: all 0.6s ease;
     
-    /* GÖRÜNMEZLİK AYARLARI (İstediğin Gibi) */
-    background: transparent; /* Arka plan yok */
-    border: none; /* Kenarlık yok */
-    backdrop-filter: none; /* Buzlu cam yok */
-    box-shadow: none; /* Gölge yok */
-    padding: 0; /* Boşluk yok */
+    /* KAPSAYICI TAMAMEN ŞEFFAF */
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
     
     /* SCROLL AYARLARI */
-    max-height: 90vh; /* Ekranın %90'ı */
-    overflow-y: auto; /* İçerik taşarsa kaydır */
-    pointer-events: auto;
+    max-height: 90vh; 
+    overflow-y: auto; 
+    pointer-events: auto; /* İçeriklere tıklanabilsin */
     
-    /* Scrollbar Gizleme (Firefox) */
-    scrollbar-width: none;  
-    -ms-overflow-style: none;  /* IE and Edge */
-
-    /* Hizalama */
     width: 90%; 
     max-width: 1200px; 
     text-align: center;
+    
+    /* Scrollbar Gizleme */
+    scrollbar-width: none;  
+    -ms-overflow-style: none;
 }
 
-/* Scrollbar Gizleme (Chrome, Safari, Opera) */
-.content-card::-webkit-scrollbar { 
-    display: none; 
-}
+.content-card::-webkit-scrollbar { display: none; }
 
 .content-card.active-card { display: block; opacity: 1; transform: translateY(0); }
 
 
-/* --- HİZMETLER KARTLARI (Burası Görünür Kalmalı) --- */
+/* --- HİZMETLER KARTLARI (GRID) --- */
+/* Buradaki isimleri düzelttik */
+
 .services-wrapper {
     display: flex;
     flex-wrap: wrap; 
     justify-content: center; 
     gap: 25px;
     width: 100%;
-    padding-bottom: 50px; /* Alttan kesilmesin diye boşluk */
+    padding-bottom: 50px;
 }
 
-.service-box {
-    background: var(--glass-card); /* Kartın kendi rengi */
+/* HTML'deki isim 'service-card' olduğu için burası da 'service-card' olmalı */
+.service-card {
+    background: var(--card-bg); /* Kart rengi */
     border: 1px solid var(--border);
-    padding: 30px; border-radius: 16px; text-align: left;
-    flex: 1 1 300px; max-width: 380px;
+    padding: 30px; 
+    border-radius: 16px; 
+    text-align: left;
+    
+    /* Kart Boyutları */
+    flex: 1 1 280px; 
+    max-width: 350px;
+    
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px); /* Kartın arkası buzlu cam olsun */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.service-box:hover {
+.service-card:hover {
     transform: translateY(-10px) scale(1.02);
     border-color: var(--primary);
-    background: rgba(20, 20, 40, 0.95);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    background: rgba(30, 30, 60, 0.9);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
-.service-icon { font-size: 2rem; margin-bottom: 15px; color: var(--primary); }
-.service-title { font-weight: 700; margin-bottom: 10px; font-size: 1.2rem; color: #fff; }
-.service-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+.icon-box { 
+    width: 60px; height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin-bottom: 20px; color: var(--primary); 
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.service-card h3 { 
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: #fff; 
+}
+.service-card p { 
+    font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; 
+}
 
 
 /* =========================================
@@ -139,7 +159,6 @@ body {
     .sidebar {
         position: fixed; left: 50px; top: 50%; transform: translateY(-50%);
         display: flex; flex-direction: column; gap: 30px; z-index: 100;
-        /* Çizgiyi kaldırdım daha temiz dursun */
         padding-left: 10px; 
     }
     .menu-item { 
@@ -152,14 +171,13 @@ body {
 
     .mobile-topbar, .mobile-menu-overlay { display: none !important; }
 
-    /* ORTALAMA AYARI: Sidebar yokmuş gibi davran */
+    /* TAM ORTALAMA */
     #content-container { 
-        width: 100%; /* Tam ekran genişlik */
+        width: 100%; 
         left: 50%; 
     } 
     
     .headline { font-size: 4.5rem; }
-    .services-grid { justify-content: center; } 
 }
 
 /* --- 2. TABLET VE MOBİL (1200px altı) --- */
@@ -177,12 +195,14 @@ body {
 
     #content-container { 
         width: 90%; 
-        top: 50%; /* Tam ortada */
-        margin-top: 20px; /* Topbar payı */
+        top: 50%; 
+        margin-top: 30px; /* Topbar payı */
     }
     
     .headline { font-size: 2.5rem; }
-    .service-box { width: 100%; max-width: 100%; }
+    
+    /* Mobilde kart genişliği ayarı */
+    .service-card { width: 100%; max-width: 100%; }
 }
 
 /* --- MOBİL MENÜ --- */
