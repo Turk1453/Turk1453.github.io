@@ -81,7 +81,7 @@ function updateLayout() {
     else {
         // --- 3. MOBİL (< 768px) ---
         // Dünya daha aşağıda, Yazılar büyük
-        camera.position.set(0, 0, 32); // Daha da uzaklaş
+        camera.position.set(0, 0, 42); // Daha da uzaklaş
         group.position.set(0, -4, 0);  // İyice aşağı çek
         group.scale.set(0.8, 0.8, 0.8);
     }
