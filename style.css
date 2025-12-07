@@ -58,68 +58,70 @@ body {
 .service-title { font-weight: 700; margin-bottom: 5px; font-size: 1.1rem; }
 .service-desc { font-size: 0.9rem; color: var(--text-muted); }
 
-/* --- SWIPER 3D SLIDER AYARLARI --- */
-.swiper {
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 50px;
+/* --- HİZMETLER ALANI (SADE & ŞIK) --- */
+
+.services-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Sığmayan aşağı kaysın */
+    justify-content: center; /* Ortala */
+    gap: 20px; /* Kartlar arası boşluk */
+    margin-top: 20px;
 }
 
-.swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 300px;
-    height: 380px; /* Kart yüksekliği */
-    background: rgba(15, 23, 42, 0.8); /* Koyu Arka Plan */
+.service-card {
+    background: rgba(255, 255, 255, 0.03); /* Çok hafif beyaz */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
+    border-radius: 12px;
+    padding: 25px;
+    width: 280px; /* Kart genişliği */
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- HOVER EFEKTLERİ (Mouse üzerine gelince) --- */
+.service-card:hover {
+    transform: translateY(-10px); /* Yukarı kalksın */
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--primary); /* Kenarlık mavi olsun */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.service-card:hover .icon-box {
+    transform: scale(1.1) rotate(5deg); /* İkon hafif büyüsün ve dönsün */
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* İkon Kutusu */
+.icon-box {
+    width: 50px; height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
     transition: 0.3s;
 }
 
-/* --- NEON EFEKTLERİ --- */
-.neon-card {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+/* Yazı Stilleri */
+.service-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
 }
 
-/* Mavi Neon */
-.blue-neon { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), inset 0 0 10px rgba(59, 130, 246, 0.1); }
-.blue-neon .card-icon { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); }
-
-/* Mor Neon */
-.purple-neon { border-color: #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.1); }
-.purple-neon .card-icon { color: #a855f7; text-shadow: 0 0 10px rgba(168, 85, 247, 0.8); }
-
-/* Yeşil Neon */
-.green-neon { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.4), inset 0 0 10px rgba(34, 197, 94, 0.1); }
-.green-neon .card-icon { color: #22c55e; text-shadow: 0 0 10px rgba(34, 197, 94, 0.8); }
-
-/* Kırmızı Neon */
-.red-neon { border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4), inset 0 0 10px rgba(239, 68, 68, 0.1); }
-.red-neon .card-icon { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
-
-/* Kart İçeriği */
-.card-icon { font-size: 3.5rem; margin-bottom: 20px; }
-.swiper-slide h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; font-weight: 700; }
-.swiper-slide p { font-size: 0.9rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 20px; }
-
-/* Etiketler */
-.tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-.tags span { 
-    background: rgba(255, 255, 255, 0.1); 
-    padding: 4px 10px; border-radius: 4px; 
-    font-size: 0.75rem; color: #fff; font-family: 'Fira Code', monospace; 
+.service-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
 }
-
-/* Pagination Noktaları */
-.swiper-pagination-bullet { background: #fff; opacity: 0.5; }
-.swiper-pagination-bullet-active { background: var(--primary); opacity: 1; }
 
 /* --- 1. MASAÜSTÜ (> 1200px) --- */
 @media (min-width: 1201px) {
@@ -191,7 +193,6 @@ body {
     }
     
     .headline { font-size: 2.5rem; }
-    .services-grid { grid-template-columns: 1fr; } /* Mobilde tek sütun */
 }
 
 /* Tablet Özel (768-1200 arası) Grid Ayarı */
@@ -218,6 +219,23 @@ body {
     font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9002;
 }
 
-#services { width: 70% !important; max-width: 1000px; } /* Kartlar sığsın diye genişlettik */
-.swiper { height: 450px; } /* Dikey yükseklik */
-.swiper-slide { width: 260px; height: 320px; } /* Mobilde biraz daha küçük */
+/* --- RESPONSIVE AYARLARI --- */
+
+/* Masaüstü (Geniş Ekran) */
+@media (min-width: 1200px) {
+    #services {
+        width: 65% !important; /* Biraz daha geniş alan */
+        max-width: 1100px;
+    }
+}
+
+/* Tablet ve Mobil */
+@media (max-width: 1199px) {
+    .services-wrapper {
+        gap: 15px;
+    }
+    .service-card {
+        width: 100%; /* Mobilde tam genişlik */
+        max-width: 320px; /* Ama çok da büyümesin */
+    }
+}
