@@ -59,30 +59,29 @@ const starMesh = new THREE.Points(particles, new THREE.PointsMaterial({size: 0.0
 scene.add(starMesh);
 
 // ==========================================
-// 3 KATMANLI RESPONSIVE KONUMLANDIRMA
+// 3 KATMANLI RESPONSIVE KONUMLANDIRMA (GÜNCEL)
 // ==========================================
 function updateLayout() {
     const width = window.innerWidth;
 
     if (width > 1200) {
         // --- 1. MASAÜSTÜ (> 1200px) ---
-        // Dünya sağda, Yazılar solda
+        // Yazılar Ortada, Dünya SAĞDA (Arka plan gibi)
         camera.position.set(0, 0, 25);
-        group.position.set(0, 0, 0); // Sağa Kaydır
+        group.position.set(0, 0, 0); // Dünyayı iyice sağa çektim ki yazıların üstüne binmesin
         group.scale.set(1, 1, 1);
     } 
     else if (width <= 1200 && width > 768) {
         // --- 2. TABLET (768px - 1200px) ---
-        // Dünya ortada ama aşağıda, Yazılar ortada
-        camera.position.set(0, 0, 30); // Biraz uzaklaş
-        group.position.set(0, 0, 0);  // Dünyayı aşağı çek
-        group.scale.set(0.9, 0.9, 0.9); // Biraz küçült
+        // Dünya ortada ve aşağıda
+        camera.position.set(0, 0, 30); 
+        group.position.set(0, 0, 0);  // Aşağı çek
+        group.scale.set(0.9, 0.9, 0.9); 
     } 
     else {
         // --- 3. MOBİL (< 768px) ---
-        // Dünya daha aşağıda, Yazılar büyük
-        camera.position.set(0, 0, 42); // Daha da uzaklaş
-        group.position.set(0, -4, 0);  // İyice aşağı çek
+        camera.position.set(0, 0, 42); 
+        group.position.set(0, -4, 0); 
         group.scale.set(0.8, 0.8, 0.8);
     }
 }
@@ -106,30 +105,23 @@ function animate() {
 }
 animate();
 
-
-// UI FONKSİYONLARI (Menü Geçişleri)
+// UI FONKSİYONLARI
 function showSection(id) {
-    // Menü aktiflik (Masaüstü ve Mobil için)
     document.querySelectorAll('.menu-item, .mobile-link').forEach(el => el.classList.remove('active'));
     
-    // Basit eşleştirme (ID'ye göre hangi sıradaki eleman olduğunu bulup işaretliyoruz)
     const links = ['home', 'services', 'syncrapy', 'contact'];
     const index = links.indexOf(id);
     
-    // Masaüstü Sidebar
     const desktopItems = document.querySelectorAll('.menu-item');
     if(desktopItems[index]) desktopItems[index].classList.add('active');
 
-    // Mobil Menü
     const mobileItems = document.querySelectorAll('.mobile-link');
     if(mobileItems[index]) mobileItems[index].classList.add('active');
 
-    // Kart Geçişi
     document.querySelectorAll('.content-card').forEach(el => el.classList.remove('active-card'));
     const target = document.getElementById(id);
     setTimeout(() => target.classList.add('active-card'), 50);
 
-    // Mobilde menüyü kapat
     document.getElementById('mobileMenu').classList.remove('open');
 }
 
