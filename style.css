@@ -217,20 +217,21 @@ body {
 .mobile-link:hover, .mobile-link.active { color: var(--primary); }
 .close-menu { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9001;}
 
-/* --- İLETİŞİM FORMU --- */
+/* --- İLETİŞİM FORMU DÜZENLEMELERİ --- */
 #contact-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    max-width: 500px; /* Form çok yayılmasın */
-    margin: 0 auto; /* Ortala */
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .form-group input, .form-group textarea {
     width: 100%;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.05); /* Şeffaf zemin */
+    /* DÜZELTME: Şeffaflık azaltıldı (Daha belirgin) */
+    background: rgba(255, 255, 255, 0.15); 
     border: 1px solid var(--border);
     border-radius: 8px;
     color: #fff;
@@ -242,10 +243,43 @@ body {
 
 .form-group input:focus, .form-group textarea:focus {
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.25); /* Tıklayınca daha da belirgin */
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
-.form-group textarea {
-    resize: none; /* Boyutlandırmayı kapat */
+.form-group textarea { resize: none; }
+
+/* --- SOSYAL MEDYA İKONLARI --- */
+.social-container {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.s-icon {
+    width: 45px; height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%; /* Yuvarlak */
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+}
+
+/* Hover Efektleri (Her markanın kendi rengi) */
+.s-icon:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+
+.s-icon.email:hover { background: #ea4335; border-color: #ea4335; }
+.s-icon.twitter:hover { background: #000; border-color: #fff; } /* X logosu */
+.s-icon.instagram:hover { background: #e1306c; border-color: #e1306c; } /* Instagram pembesi */
+.s-icon.whatsapp:hover { background: #25D366; border-color: #25D366; } /* Whatsapp yeşili */
+.s-icon.facebook:hover { background: #1877F2; border-color: #1877F2; } /* Facebook mavisi */
