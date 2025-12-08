@@ -83,6 +83,8 @@ body {
     /* Scrollbar Gizleme */
     scrollbar-width: none;  
     -ms-overflow-style: none;
+    overflow-x: hidden; /* Yatayda asla kaydırma çubuğu çıkarma */
+    overflow-y: auto;   /* Sadece dikeyde kaydır */
 }
 
 .content-card::-webkit-scrollbar { display: none; }
@@ -99,7 +101,11 @@ body {
     justify-content: center; 
     gap: 25px;
     width: 100%;
-    padding-bottom: 50px;
+    
+    /* DÜZELTME BURADA: */
+    padding: 20px; /* Kenarlardan 20px boşluk bırak ki kartlar büyüyünce sığsın */
+    padding-bottom: 50px; /* Alt kısım için ekstra boşluk */
+    overflow: visible; /* Taşarsa kesme, göster */
 }
 
 /* HTML'deki isim 'service-card' olduğu için burası da 'service-card' olmalı */
@@ -282,3 +288,21 @@ body {
 .s-icon.instagram:hover { background: #e1306c; border-color: #e1306c; } /* Instagram pembesi */
 .s-icon.whatsapp:hover { background: #25D366; border-color: #25D366; } /* Whatsapp yeşili */
 .s-icon.facebook:hover { background: #1877F2; border-color: #1877F2; } /* Facebook mavisi */
+
+/* --- CONTACT FORM PLACEHOLDER AYARLARI --- */
+
+/* Input ve Textarea içindeki silik yazıların rengini açıyoruz */
+#contact-form input::placeholder,
+#contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important; /* %70 Beyazlık (Daha parlak) */
+    opacity: 1; /* Tarayıcıların otomatik soluklaştırmasını engelle */
+    font-weight: 500; /* Yazıyı biraz kalınlaştır ki net okunsun */
+    letter-spacing: 0.5px;
+}
+
+/* Tıklayınca (Focus olunca) placeholder hafifçe solsun ki yazarken karışmasın */
+#contact-form input:focus::placeholder,
+#contact-form textarea:focus::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+    transition: 0.3s;
+}
