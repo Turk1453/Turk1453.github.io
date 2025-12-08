@@ -279,7 +279,6 @@ body {
 .s-icon:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 
 .s-icon.email:hover { background: #ea4335; border-color: #ea4335; }
-.s-icon.twitter:hover { background: #000; border-color: #fff; } /* X logosu */
 .s-icon.instagram:hover { background: #e1306c; border-color: #e1306c; } /* Instagram pembesi */
 .s-icon.whatsapp:hover { background: #25D366; border-color: #25D366; } /* Whatsapp yeşili */
 .s-icon.facebook:hover { background: #1877F2; border-color: #1877F2; } /* Facebook mavisi */
