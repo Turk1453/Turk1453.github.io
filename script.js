@@ -128,3 +128,57 @@ function showSection(id) {
 function toggleMobileMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
 }
+
+// ==========================================
+// EMAIL GÖNDERİMİ (EMAILJS)
+// ==========================================
+
+// 1. EmailJS'i Başlat (Kendi Public Key'ini buraya yaz)
+(function() {
+    emailjs.init("oLOrV3BZ9Wrne5Zub"); 
+})();
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+    const btn = this.querySelector('button');
+    const status = document.getElementById('status-text');
+    
+    // Butonu yükleniyor moduna al
+    const originalText = btn.innerText;
+    btn.innerText = 'GÖNDERİLİYOR...';
+    btn.disabled = true;
+
+    // EmailJS ile gönder
+    // service_id, template_id, form_elementi
+    emailjs.sendForm('service_097revx', 'template_k0g89n8', this)
+        .then(function() {
+            // BAŞARILI
+            btn.innerText = 'GÖNDERİLDİ ✓';
+            btn.style.backgroundColor = '#22c55e'; // Yeşil yap
+            status.innerText = "Mesajınız başarıyla iletildi. En kısa sürede döneceğim!";
+            status.style.display = 'block';
+            status.style.color = '#22c55e';
+            
+            // Formu temizle
+            document.getElementById('contact-form').reset();
+
+            // 3 saniye sonra butonu eski haline getir
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.backgroundColor = ''; // Rengi sıfırla
+                status.style.display = 'none';
+            }, 5000);
+
+        }, function(error) {
+            // HATA
+            console.log('FAILED...', error);
+            btn.innerText = 'HATA OLUŞTU';
+            btn.style.backgroundColor = '#ef4444'; // Kırmızı yap
+            status.innerText = "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
+            status.style.display = 'block';
+            status.style.color = '#ef4444';
+            btn.disabled = false;
+        });
+});
