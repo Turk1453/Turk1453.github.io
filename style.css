@@ -216,3 +216,36 @@ body {
 .mobile-link { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); cursor: pointer; }
 .mobile-link:hover, .mobile-link.active { color: var(--primary); }
 .close-menu { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9001;}
+
+/* --- İLETİŞİM FORMU --- */
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px; /* Form çok yayılmasın */
+    margin: 0 auto; /* Ortala */
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Şeffaf zemin */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.form-group textarea {
+    resize: none; /* Boyutlandırmayı kapat */
+}
