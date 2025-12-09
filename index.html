@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <link rel="stylesheet" href="style.css">
 
@@ -70,6 +71,93 @@
             </div>
         </div>
 
+        <div id="syncrapy" class="content-card">
+            <h1 class="headline">Portfolyo & Ürünler</h1>
+            <p class="sub-headline">Geliştirdiğim web ve mobil projeleri inceleyin.</p>
+        
+            <div class="portfolio-tabs">
+                <button class="tab-btn active-tab" onclick="openTab(event, 'web-projects')">Web Siteleri</button>
+                <button class="tab-btn" onclick="openTab(event, 'mobile-projects')">Mobil Uygulamalar</button>
+            </div>
+
+            <div id="web-projects" class="tab-content active-content">
+                <div class="swiper portfolioSwiper">
+                    <div class="swiper-wrapper">
+                
+                        <div class="swiper-slide project-slide">
+                            <a href="PROJE_LINKI_HTML_1.html" target="_blank" class="project-link">
+                                <img src="https://via.placeholder.com/400x250/3b82f6/ffffff?text=Web+Proje+1" alt="Proje 1">
+                                <div class="project-info">
+                                    <h3>Kurumsal Web Sitesi</h3>
+                                    <p>Tıklayıp demoyu inceleyin.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="swiper-slide project-slide">
+                            <a href="PROJE_LINKI_HTML_2.html" target="_blank" class="project-link">
+                                <img src="https://via.placeholder.com/400x250/a855f7/ffffff?text=Web+Proje+2" alt="Proje 2">
+                                <div class="project-info">
+                                    <h3>E-Ticaret Taslağı</h3>
+                                    <p>HTML/CSS/JS dinamik yapı.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="swiper-slide project-slide">
+                            <a href="PROJE_LINKI_HTML_3.html" target="_blank" class="project-link">
+                                <img src="https://via.placeholder.com/400x250/22c55e/ffffff?text=Web+Proje+3" alt="Proje 3">
+                                <div class="project-info">
+                                    <h3>Landing Page</h3>
+                                    <p>Hızlı ve etkileyici tanıtım sayfası.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+
+            <div id="mobile-projects" class="tab-content">
+                <div class="swiper portfolioSwiper">
+                    <div class="swiper-wrapper">
+                
+                        <div class="swiper-slide project-slide mobile-slide-img">
+                            <img src="https://via.placeholder.com/250x450/ef4444/ffffff?text=Mobil+App+1" alt="Mobil 1" style="object-fit: contain;">
+                             <div class="project-info">
+                                <h3>KivyMD App v1</h3>
+                                <p>Android tabanlı otomasyon aracı.</p>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide project-slide mobile-slide-img">
+                            <img src="https://via.placeholder.com/250x450/f59e0b/ffffff?text=Mobil+App+2" alt="Mobil 2" style="object-fit: contain;">
+                             <div class="project-info">
+                                <h3>Stok Takip Mobil</h3>
+                                <p>Syncrapy mobil arayüz denemesi.</p>
+                            </div>
+                        </div>
+                         <div class="swiper-slide project-slide mobile-slide-img">
+                            <img src="https://via.placeholder.com/250x450/3b82f6/ffffff?text=Mobil+App+3" alt="Mobil 3" style="object-fit: contain;">
+                             <div class="project-info">
+                                <h3>Güvenlik Analiz Aracı</h3>
+                                <p>Mobil ağ tarayıcı arayüzü.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+        </div>
+
         <div id="contact" class="content-card">
             <h1 class="headline">Bağlantıya Geç</h1>
             <p class="sub-headline">Projelerinizi ve fikirlerinizi konuşalım.</p>
@@ -99,8 +187,10 @@
                 </div>
             </div>
         </div>
+        
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script src="script.js"></script>
 
