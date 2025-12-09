@@ -306,3 +306,112 @@ body {
     color: rgba(255, 255, 255, 0.3) !important;
     transition: 0.3s;
 }
+
+/* --- PORTFOLYO SEKMELERİ (TABS) --- */
+.portfolio-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.tab-btn.active-tab {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Sekme İçerikleri (Başlangıçta gizli) */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+.tab-content.active-content {
+    display: block;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+/* --- SWIPER SLIDER TASARIMI --- */
+.portfolioSwiper {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    background: transparent !important; /* Arka plan tamamen şeffaf */
+}
+
+.project-slide {
+    background: transparent; /* Slide'ın kendisi de şeffaf */
+    width: 400px; /* Web siteleri için genişlik */
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s;
+    /* Cam efekti sadece görselin olduğu kutuda olacak */
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+}
+
+.project-slide img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Görseli kutuya doldur */
+    display: block;
+    transition: 0.5s;
+}
+
+/* Mobil için özel görsel ayarı (Dikey dursunlar) */
+.mobile-slide-img { width: 250px; } /* Mobil slide daha dar */
+.mobile-slide-img img { height: 450px; object-fit: cover; }
+
+/* Hover Efekti */
+.project-slide:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.project-slide:hover img {
+    transform: scale(1.05); /* Görsel hafif büyüsün */
+}
+
+/* Proje Bilgi Yazısı (Görselin altındaki) */
+.project-info {
+    padding: 15px;
+    background: rgba(10, 10, 25, 0.9);
+    text-align: left;
+}
+.project-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
+.project-info p { font-size: 0.9rem; color: var(--text-muted); }
+.project-link { text-decoration: none; color: inherit; display: block; }
+
+/* Swiper Okları ve Noktaları */
+.swiper-button-next, .swiper-button-prev { color: var(--primary); }
+.swiper-pagination-bullet { background: #fff; opacity: 0.5; }
+.swiper-pagination-bullet-active { background: var(--primary); opacity: 1; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .project-slide { width: 300px; } /* Mobilde biraz küçült */
+    .project-slide img { height: 200px; }
+    
+    .mobile-slide-img { width: 220px; }
+    .mobile-slide-img img { height: 350px; }
+}
