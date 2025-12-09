@@ -182,3 +182,58 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             btn.disabled = false;
         });
 });
+
+// ==========================================
+// PORTFOLYO SEKMELERİ (TABS) MANTIĞI
+// ==========================================
+function openTab(evt, tabName) {
+    // 1. Tüm sekme içeriklerini gizle
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active-content");
+    }
+
+    // 2. Tüm butonların aktifliğini kaldır
+    tablinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active-tab");
+    }
+
+    // 3. Tıklanan sekmeyi göster ve butonunu aktif yap
+    document.getElementById(tabName).classList.add("active-content");
+    evt.currentTarget.classList.add("active-tab");
+}
+
+
+// ==========================================
+// SWIPER SLIDER BAŞLATMA (Portfolyo İçin)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function() {
+    
+    var portfolioSwiper = new Swiper(".portfolioSwiper", {
+        effect: "coverflow", // Platform efekti
+        grabCursor: true,
+        centeredSlides: true, // Aktif olan ortada
+        slidesPerView: "auto", // Sığdığı kadar göster
+        loop: true, // Sonsuz döngü
+        
+        // Coverflow (Platform) Ayarları
+        coverflowEffect: {
+            rotate: 30,   // Dönüş açısı
+            stretch: 0,
+            depth: 200,   // Derinlik
+            modifier: 1,
+            slideShadows: true, // Gölgeler açık
+        },
+        
+        // Sayfalama ve Oklar
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+
+        // ÖNEMLİ: Sekme içinde olduğu için gizlenip açılınca bozulmaması için
+        observer: true,
+        observeParents: true,
+    });
+
+});
