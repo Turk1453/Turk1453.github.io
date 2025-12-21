@@ -6,6 +6,172 @@
     <title>Turk1453 | Dijital Çözümler</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+</head>
+<body>
+
+    <div id="loading">SİSTEM YÜKLENİYOR...</div>
+    <div id="desktop-logo">TURK1453</div>
+
+    <nav class="sidebar">
+        <div class="menu-item active" onclick="showSection('home')">Genel Bakış</div>
+        <div class="menu-item" onclick="showSection('services')">Hizmetler</div>
+        <div class="menu-item" onclick="showSection('syncrapy')">Projeler</div>
+        <div class="menu-item" onclick="showSection('contact')">İletişim</div>
+    </nav>
+
+    <div class="mobile-topbar">
+        <div class="mobile-logo">TURK1453</div>
+        <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+    </div>
+    
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMobileMenu()">×</div>
+        <div class="mobile-link" onclick="showSection('home')">Genel Bakış</div>
+        <div class="mobile-link" onclick="showSection('services')">Hizmetler</div>
+        <div class="mobile-link" onclick="showSection('syncrapy')">Projeler</div>
+        <div class="mobile-link" onclick="showSection('contact')">İletişim</div>
+    </div>
+
+    <canvas id="webgl"></canvas>
+
+    <div id="content-container">
+        
+        <div id="home" class="content-card active-card">
+            <h1 class="headline">Dijital Geleceği<br>İnşa Ediyoruz.</h1>
+            <p class="sub-headline">İşletmeler için yüksek performanslı yazılım mimarileri.</p>
+            <a href="#" onclick="showSection('syncrapy')" class="btn-primary">Projeleri İncele</a>
+        </div>
+
+        <div id="services" class="content-card">
+            <h1 class="headline">Hizmetlerimiz</h1>
+            <p class="sub-headline">İhtiyacınıza uygun profesyonel çözümler.</p>
+            <div class="services-wrapper">
+                <div class="service-card">
+                    <div class="icon-box">💻</div>
+                    <h3>Web Yazılım</h3>
+                    <p>Python & Django ile güvenli backend mimarileri veya HTML5 ile modern statik siteler.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">📱</div>
+                    <h3>Mobil Uygulama</h3>
+                    <p>KivyMD ile Android dünyası için hızlı, yerel ve kurumsal mobil çözümler.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">🎨</div>
+                    <h3>UI/UX Tasarım</h3>
+                    <p>Her ekrana uyum sağlayan, kullanıcı deneyimi odaklı responsive arayüzler.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="syncrapy" class="content-card">
+            <div class="category-container">
+                <h2 class="headline" style="text-align:center; margin-bottom:40px;">Projelerimiz</h2>
+                
+                <div class="category-grid">
+                    <a href="projeler/blog1.html" class="cat-card">
+                        <div class="cat-icon"><i class="fas fa-feather-alt"></i></div>
+                        <h3>Blog Siteleri</h3>
+                        <p>Kişisel ve yazınsal odaklı modern blog tasarımları.</p>
+                        <span class="cat-link">İncele <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="index1.html" class="cat-card">
+                        <div class="cat-icon"><i class="fas fa-building"></i></div>
+                        <h3>Kurumsal Siteler</h3>
+                        <p>Şirketler için prestijli ve SEO uyumlu web çözümleri.</p>
+                        <span class="cat-link">İncele <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="index1.html" class="cat-card">
+                        <div class="cat-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <h3>E-Ticaret</h3>
+                        <p>Sepet yönetimi ve ödeme altyapılı alışveriş sistemi.</p>
+                        <span class="cat-link">Mağazayı Gez <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="index1.html" class="cat-card">
+                        <div class="cat-icon"><i class="fas fa-home"></i></div>
+                        <h3>Emlak Portalı</h3>
+                        <p>Gelişmiş filtreleme ve harita destekli ilan platformu.</p>
+                        <span class="cat-link">İlanlara Bak <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="index1.html" class="cat-card">
+                        <div class="cat-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Yönetim Paneli</h3>
+                        <p>İşletmeler için veri analizi ve yönetim arayüzü.</p>
+                        <span class="cat-link">Demoyu İncele <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <div class="cat-card" onclick="openAppModal()">
+                        <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Mobil Uygulamalar</h3>
+                        <p>Android ve iOS için native performanslı uygulamalar.</p>
+                        <span class="cat-link">Görüntüle <i class="fas fa-eye"></i></span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="content-card">
+            <h1 class="headline">Bağlantıya Geç</h1>
+            <p class="sub-headline">Projelerinizi ve fikirlerinizi konuşalım.</p>
+            <form id="contact-form">
+                <div class="form-group"><input type="text" name="user_name" placeholder="Adınız" required></div>
+                <div class="form-group"><input type="email" name="user_email" placeholder="E-posta Adresiniz" required></div>
+                <div class="form-group"><textarea name="message" rows="5" placeholder="Mesajınız..." required></textarea></div>
+                <button type="submit" class="btn-primary" style="border:none; width:100%;">GÖNDER</button>
+            </form>
+            <p id="status-text" style="margin-top:15px; font-size:0.9rem; display:none;"></p>
+            <div class="social-container">
+                <div class="social-icons">
+                    <a href="mailto:contact@turk1453.com" class="s-icon email"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="s-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="s-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="appModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAppModal()">×</span>
+            <h3>Mobil Uygulama Vitrini</h3>
+            <p style="color:#94a3b8; margin-bottom:20px; font-size: 0.9rem;">Diğer ekranları görmek için kaydırın.</p>
+
+            <div class="swiper modalSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide app-slide"><img src="https://via.placeholder.com/300x600/0f172a/ffffff?text=App+Ekrani+1" alt="App 1"></div>
+                    <div class="swiper-slide app-slide"><img src="https://via.placeholder.com/300x600/3b82f6/ffffff?text=App+Ekrani+2" alt="App 2"></div>
+                    <div class="swiper-slide app-slide"><img src="https://via.placeholder.com/300x600/a855f7/ffffff?text=App+Ekrani+3" alt="App 3"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turk1453 | Dijital Çözümler</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
