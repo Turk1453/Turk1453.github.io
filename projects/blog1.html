@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Pro Blog | Turk1453</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            --primary: #4f46e5; /* İndigo Moru */
+            --dark: #0f172a;
+            --light-bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: #334155;
+        }
+
+        /* --- 1. Glassmorphism Navbar --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+        .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .btn-subscribe {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50px;
+            padding: 8px 25px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-subscribe:hover {
+            background: #4338ca;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* --- 2. Hero Section --- */
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1499750310159-5b5f091fd516?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        .hero-overlay {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.9));
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 20px; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* --- 3. Featured Card (Negatif Margin ile Yukarı Çekme) --- */
+        .featured-wrapper {
+            margin-top: -80px; /* Hero'nun üzerine bindir */
+            position: relative;
+            z-index: 5;
+        }
+        .featured-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column; /* Mobilde alt alta */
+        }
+        @media(min-width: 992px) {
+            .featured-card { flex-direction: row; height: 350px; }
+            .featured-img { width: 55%; height: 100%; object-fit: cover; }
+            .featured-body { width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        }
+        @media(max-width: 991px) {
+            .featured-img { width: 100%; height: 250px; object-fit: cover; }
+            .featured-body { padding: 30px; }
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        /* --- 4. Grid Cards --- */
+        .blog-card {
+            border: none;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .card-img-top {
+            height: 220px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .blog-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        .card-body { padding: 25px; }
+        .card-title { font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+        .card-text { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+        .author-box { display: flex; align-items: center; gap: 10px; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .author-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .author-info small { color: #94a3b8; font-size: 0.8rem; display: block; }
+        .author-info strong { font-size: 0.9rem; color: var(--dark); }
+
+        /* --- Footer --- */
+        footer { background: var(--dark); color: #fff; padding: 60px 0 20px; }
+        .social-link {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #fff; text-decoration: none; margin-right: 10px;
+            transition: 0.3s;
+        }
+        .social-link:hover { background: var(--primary); transform: translateY(-3px); }
+
+        .sticky-nav-btn {
+        position: fixed;
+        width: 50px; height: 50px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s;
+        z-index: 9999;
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+    }
+    .sticky-nav-btn:hover { background: #3b82f6; color: white; transform: scale(1.1); }
+    
+    /* Konumlandırma */
+    .prev-btn { top: 50%; left: 20px; transform: translateY(-50%); }
+    .next-btn { top: 50%; right: 20px; transform: translateY(-50%); }
+    
+    /* Ana Sayfa Butonu */
+    .home-btn-sticky {
+        position: fixed;
+        bottom: 20px; left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.9);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        z-index: 9999;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: 0.3s;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .home-btn-sticky:hover { background: #ef4444; color: white; }
+
+    /* Mobilde okları biraz küçültelim */
+    @media (max-width: 768px) {
+        .sticky-nav-btn { width: 40px; height: 40px; font-size: 0.9rem; }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+    }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="#">
+                <i class="fas fa-layer-group text-primary me-2"></i>INSIGHT<span class="text-primary">PRO</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#">Ana Sayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Teknoloji</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Tasarım</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kariyer</a></li>
+                    <li class="nav-item ms-3">
+                        <a href="#" class="btn btn-subscribe">Abone Ol</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <a href="blog3.html" class="sticky-nav-btn prev-btn" title="Önceki Proje">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+
+    <a href="blog2.html" class="sticky-nav-btn next-btn" title="Sonraki Proje">
+        <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a href="../index.html" class="home-btn-sticky">
+        <i class="fas fa-home"></i> Ana Sayfaya Dön
+    </a>
+
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="badge bg-primary px-3 py-2 mb-3 rounded-pill">GÜNCEL BLOG</span>
+            <h1 class="hero-title">Geleceği Tasarlayan Fikirler</h1>
+            <p class="lead text-white-50">Teknoloji, yazılım mimarisi ve dijital tasarım üzerine derinlemesine analizler.</p>
+        </div>
+    </section>
+
+    <div class="container featured-wrapper">
+        <div class="featured-card">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" class="featured-img" alt="Kodlama">
+            <div class="featured-body">
+                <span class="category-badge">YAZILIM GELİŞTİRME</span>
+                <h2 class="fw-bold mb-3">Neden Clean Code Her Şeyden Önemlidir?</h2>
+                <p class="text-muted">Kod yazmak sadece bilgisayarlar için değildir, gelecekteki geliştiriciler (ve kendiniz) için bir iletişim aracıdır. Spagetti koddan kurtulmanın yolları.</p>
+                <a href="#" class="btn btn-outline-primary rounded-pill mt-3 px-4 fw-bold" style="width: fit-content;">Makaleyi Oku</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 my-5">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h6 class="text-primary fw-bold text-uppercase ls-1">Keşfet</h6>
+                <h2 class="fw-bold text-dark display-6">Son Eklenenler</h2>
+            </div>
+            <a href="#" class="text-decoration-none fw-bold text-primary">Tümünü Gör <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+
+        <div class="row g-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" class="card-img-top" alt="UI Design">
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge" style="color:#d946ef; background: rgba(217, 70, 239, 0.1);">UI / UX Tasarım</span>
+                        <h4 class="card-title">Karanlık Modun Psikolojisi</h4>
+                        <p class="card-text">Kullanıcılar neden Dark Mode seviyor? Göz sağlığı mı yoksa sadece estetik bir tercih mi?</p>
+                        <div class="author-box">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="author-img" alt="Yazar">
+                            <div class="author-info">
+                                <strong>Elif Yılmaz</strong>
+                                <small>21 Ara 2025 • 5 dk okuma</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop" class="card-img-top" alt="Cyber Security">
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge" style="color:#ef4444; background: rgba(239, 68, 68, 0.1);">Siber Güvenlik</span>
+                        <h4 class="card-title">Beyaz Şapkalı Hacker Olmak</h4>
+                        <p class="card-text">Etik hackerlık yol haritası. Hangi sertifikalar gerekli ve nereden başlanmalı?</p>
+                        <div class="author-box">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="author-img" alt="Yazar">
+                            <div class="author-info">
+                                <strong>Caner Demir</strong>
+                                <small>20 Ara 2025 • 8 dk okuma</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=800&auto=format&fit=crop" class="card-img-top" alt="Personal Blog">
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge" style="color:#10b981; background: rgba(16, 185, 129, 0.1);">Kişisel Gelişim</span>
+                        <h4 class="card-title">Freelance Çalışma Disiplini</h4>
+                        <p class="card-text">Evden çalışırken verimliliği korumak için uyguladığım 5 Pomodoro tekniği.</p>
+                        <div class="author-box">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" class="author-img" alt="Yazar">
+                            <div class="author-info">
+                                <strong>Selin Kara</strong>
+                                <small>18 Ara 2025 • 4 dk okuma</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <section class="py-5" style="background: var(--dark);">
+        <div class="container text-center text-white">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <i class="far fa-paper-plane fs-1 mb-3 text-primary"></i>
+                    <h2 class="fw-bold">Haftalık Bültene Katılın</h2>
+                    <p class="text-secondary mb-4">En yeni makaleler ve teknoloji haberleri her Pazartesi kutunuzda.</p>
+                    <div class="input-group mb-3 w-75 mx-auto">
+                        <input type="email" class="form-control p-3 rounded-start-pill border-0" placeholder="E-posta adresiniz...">
+                        <button class="btn btn-primary px-4 rounded-end-pill fw-bold" type="button">Kayıt Ol</button>
+                    </div>
+                    <small class="text-secondary opacity-50">Asla spam yapmayız. İstediğiniz zaman ayrılabilirsiniz.</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-3">INSIGHT<span class="text-primary">PRO</span></h5>
+                    <p class="text-secondary small">Dijital dünyanın nabzını tutan, modern ve tarafsız teknoloji blogu.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <h6 class="fw-bold mb-3">Kategoriler</h6>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">Yazılım</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">Tasarım</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">Donanım</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6">
+                    <h6 class="fw-bold mb-3">Kurumsal</h6>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">Hakkımızda</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">İletişim</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-secondary">Gizlilik</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold mb-3">İletişim</h6>
+                    <p class="text-secondary small mb-1"><i class="fas fa-map-marker-alt me-2"></i> Teknopark, İstanbul</p>
+                    <p class="text-secondary small"><i class="fas fa-envelope me-2"></i> info@insightpro.com</p>
+                </div>
+            </div>
+            <hr class="border-secondary opacity-25 mt-4">
+            <div class="text-center text-secondary small">
+                &copy; 2025 Turk1453 Blog Projesi. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
