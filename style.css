@@ -1,13 +1,10 @@
-/* --- GLOBAL AYARLAR --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* =========================================
+   1. TEMEL AYARLAR & DEĞİŞKENLER
+   ========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
     --primary: #3b82f6;
-    /* Kartların Rengi (Buzlu Cam Efekti Sadece Kartlarda Olacak) */
     --card-bg: rgba(20, 20, 35, 0.7); 
     --border: rgba(255, 255, 255, 0.15);
     --text-main: #ffffff;
@@ -21,14 +18,15 @@ body {
     color: var(--text-main);
 }
 
-/* --- YÜKLENİYOR --- */
 #loading {
     position: fixed; top:0; left:0; width:100%; height:100%; background: #02040a;
     z-index: 9999; display: flex; align-items: center; justify-content: center;
     font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--primary);
 }
 
-/* --- ORTAK YAZILAR --- */
+/* =========================================
+   2. TİPOGRAFİ VE BUTONLAR
+   ========================================= */
 .headline { 
     font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
     text-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -37,7 +35,6 @@ body {
     color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 30px; 
     text-shadow: 0 5px 15px rgba(0,0,0,0.8);
 }
-
 .btn-primary {
     display: inline-block; padding: 12px 30px; background: var(--primary);
     color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600;
@@ -45,173 +42,56 @@ body {
 }
 .btn-primary:hover { transform: translateY(-3px); background: #2563eb; }
 
-/* --- ANA İÇERİK KUTUSU (Görünmez & Scrollbar Gizli) --- */
+/* =========================================
+   3. ANA İÇERİK KUTUSU
+   ========================================= */
 #content-container {
-    position: fixed; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%);
-    z-index: 50; 
-    pointer-events: none; /* Boşluklara tıklayınca arkaya geçsin */
-    width: 100%; height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 50; pointer-events: none; width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
 }
-
 .content-card {
-    display: none; 
-    opacity: 0; 
-    transform: translateY(30px);
+    display: none; opacity: 0; transform: translateY(30px);
     transition: all 0.6s ease;
-    
-    /* KAPSAYICI TAMAMEN ŞEFFAF */
-    background: transparent;
-    border: none;
-    backdrop-filter: none;
-    box-shadow: none;
-    padding: 0;
-    
-    /* SCROLL AYARLARI */
-    max-height: 90vh; 
-    overflow-y: auto; 
-    pointer-events: auto; /* İçeriklere tıklanabilsin */
-    
-    width: 90%; 
-    max-width: 1200px; 
-    text-align: center;
-    
-    /* Scrollbar Gizleme */
-    scrollbar-width: none;  
-    -ms-overflow-style: none;
-    overflow-x: hidden; /* Yatayda asla kaydırma çubuğu çıkarma */
-    overflow-y: auto;   /* Sadece dikeyde kaydır */
+    background: transparent; border: none; backdrop-filter: none; box-shadow: none; padding: 0;
+    max-height: 90vh; overflow-y: auto; overflow-x: hidden; pointer-events: auto; 
+    width: 90%; max-width: 1200px; text-align: center;
+    scrollbar-width: none; -ms-overflow-style: none;
 }
-
 .content-card::-webkit-scrollbar { display: none; }
-
 .content-card.active-card { display: block; opacity: 1; transform: translateY(0); }
 
-
-/* --- HİZMETLER KARTLARI (GRID) --- */
-/* Buradaki isimleri düzelttik */
-
-.services-wrapper {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 25px;
-    width: 100%;
-    
-    /* DÜZELTME BURADA: */
-    padding: 20px; /* Kenarlardan 20px boşluk bırak ki kartlar büyüyünce sığsın */
-    padding-bottom: 50px; /* Alt kısım için ekstra boşluk */
-    overflow: visible; /* Taşarsa kesme, göster */
-}
-
-/* HTML'deki isim 'service-card' olduğu için burası da 'service-card' olmalı */
-.service-card {
-    background: var(--card-bg); /* Kart rengi */
-    border: 1px solid var(--border);
-    padding: 30px; 
-    border-radius: 16px; 
-    text-align: left;
-    
-    /* Kart Boyutları */
-    flex: 1 1 280px; 
-    max-width: 350px;
-    
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px); /* Kartın arkası buzlu cam olsun */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.service-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: var(--primary);
-    background: rgba(30, 30, 60, 0.9);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-}
-
-.icon-box { 
-    width: 60px; height: 60px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; margin-bottom: 20px; color: var(--primary); 
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.service-card h3 { 
-    font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: #fff; 
-}
-.service-card p { 
-    font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; 
-}
-
-
 /* =========================================
-   RESPONSIVE (EKRAN AYARLARI)
+   4. NAVIGASYON
    ========================================= */
-
-/* --- 1. MASAÜSTÜ (> 1200px) --- */
-@media (min-width: 1201px) {
-    #desktop-logo {
-        position: fixed; top: 40px; left: 50px;
-        font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700;
-        z-index: 100; pointer-events: none; display: flex; align-items: center; gap: 10px;
-    }
-    #desktop-logo::before { content: ''; display: block; width: 12px; height: 12px; background: var(--primary); }
-
-    .sidebar {
-        position: fixed; left: 50px; top: 50%; transform: translateY(-50%);
-        display: flex; flex-direction: column; gap: 30px; z-index: 100;
-        padding-left: 10px; 
-    }
-    .menu-item { 
-        font-size: 1rem; color: rgba(255,255,255,0.5); 
-        cursor: pointer; transition: 0.3s; position: relative; font-weight: 500;
-    }
-    .menu-item:hover, .menu-item.active { color: #fff; transform: translateX(5px); }
-    .menu-item.active { font-weight: 700; }
-    .menu-item.active::before { content: ''; position: absolute; left: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background: var(--primary); border-radius: 50%; }
-
-    .mobile-topbar, .mobile-menu-overlay { display: none !important; }
-
-    /* TAM ORTALAMA */
-    #content-container { 
-        width: 100%; 
-        left: 50%; 
-    } 
-    
-    .headline { font-size: 4.5rem; }
+#desktop-logo {
+    position: fixed; top: 40px; left: 50px;
+    font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700;
+    z-index: 100; pointer-events: none; display: flex; align-items: center; gap: 10px;
 }
+#desktop-logo::before { content: ''; display: block; width: 12px; height: 12px; background: var(--primary); }
 
-/* --- 2. TABLET VE MOBİL (1200px altı) --- */
-@media (max-width: 1200px) {
-    #desktop-logo, .sidebar { display: none !important; }
-
-    .mobile-topbar {
-        display: flex !important; position: fixed; top: 0; left: 0; right: 0; height: 70px;
-        background: rgba(2, 4, 10, 0.8); backdrop-filter: blur(10px);
-        z-index: 9000; align-items: center; justify-content: space-between;
-        padding: 0 25px; border-bottom: 1px solid var(--border);
-    }
-    .mobile-logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.3rem; color: #fff; }
-    .hamburger { font-size: 2rem; cursor: pointer; color: #fff; padding: 5px; }
-
-    #content-container { 
-        width: 90%; 
-        top: 50%; 
-        margin-top: 30px; /* Topbar payı */
-    }
-    
-    .headline { font-size: 2.5rem; }
-    
-    /* Mobilde kart genişliği ayarı */
-    .service-card { width: 100%; max-width: 100%; }
+.sidebar {
+    position: fixed; left: 50px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 30px; z-index: 100; padding-left: 10px; 
 }
+.menu-item { 
+    font-size: 1rem; color: rgba(255,255,255,0.5); 
+    cursor: pointer; transition: 0.3s; position: relative; font-weight: 500;
+}
+.menu-item:hover, .menu-item.active { color: #fff; transform: translateX(5px); }
+.menu-item.active { font-weight: 700; }
+.menu-item.active::before { content: ''; position: absolute; left: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background: var(--primary); border-radius: 50%; }
 
-/* --- MOBİL MENÜ --- */
+.mobile-topbar {
+    display: none; position: fixed; top: 0; left: 0; right: 0; height: 70px;
+    background: rgba(2, 4, 10, 0.8); backdrop-filter: blur(10px);
+    z-index: 9000; align-items: center; justify-content: space-between;
+    padding: 0 25px; border-bottom: 1px solid var(--border);
+}
+.mobile-logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.3rem; color: #fff; }
+.hamburger { font-size: 2rem; cursor: pointer; color: #fff; padding: 5px; }
+
 .mobile-menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
     background: #02040a; z-index: 8999;
@@ -223,195 +103,125 @@ body {
 .mobile-link:hover, .mobile-link.active { color: var(--primary); }
 .close-menu { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 9001;}
 
-/* --- İLETİŞİM FORMU DÜZENLEMELERİ --- */
-#contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+/* =========================================
+   5. HİZMETLER BÖLÜMÜ
+   ========================================= */
+.services-wrapper {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; width: 100%;
+    padding: 20px; padding-bottom: 50px; overflow: visible;
+}
+.service-card {
+    background: var(--card-bg); border: 1px solid var(--border); padding: 30px; 
+    border-radius: 16px; text-align: left; flex: 1 1 280px; max-width: 350px;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02); border-color: var(--primary);
+    background: rgba(30, 30, 60, 0.9); box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+.icon-box { 
+    width: 60px; height: 60px; background: rgba(255, 255, 255, 0.05); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 2rem; 
+    margin-bottom: 20px; color: var(--primary); border: 1px solid rgba(255,255,255,0.05);
+}
+.service-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: #fff; }
+.service-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+/* =========================================
+   6. PROJELER (YENİ GRID YAPISI)
+   ========================================= */
+#syncrapy.content-card {
+    width: 90%; max-width: 1200px; height: auto;
+    padding: 0; background: transparent; box-shadow: none; border: none;
+}
+.category-container {
+    width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 20px 0;
+}
+.category-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; width: 100%;
+}
+.cat-card {
+    background: rgba(20, 20, 35, 0.8); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px; padding: 40px 30px; text-align: center; text-decoration: none;
+    transition: all 0.3s ease; cursor: pointer; display: flex; flex-direction: column;
+    align-items: center; backdrop-filter: blur(10px);
+}
+.cat-card:hover {
+    transform: translateY(-10px); background: rgba(59, 130, 246, 0.15);
+    border-color: var(--primary); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+}
+.cat-icon { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
+.cat-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+.cat-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
+.cat-link {
+    margin-top: auto; color: #fff; font-weight: 600; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 8px;
 }
 
+/* =========================================
+   7. POP-UP (MODAL) TASARIMI
+   ========================================= */
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9); z-index: 10000;
+    align-items: center; justify-content: center; backdrop-filter: blur(5px);
+}
+.modal-content {
+    background: #0f172a; width: 90%; max-width: 500px; padding: 30px;
+    border-radius: 20px; border: 1px solid var(--border); position: relative;
+    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.close-modal {
+    position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff;
+    cursor: pointer; transition: 0.3s;
+}
+.close-modal:hover { color: var(--primary); }
+
+.modalSwiper { width: 100%; padding-bottom: 30px; margin-top: 10px; }
+.app-slide img {
+    max-width: 100%; height: auto; border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   8. İLETİŞİM FORMU
+   ========================================= */
+#contact-form { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 500px; margin: 0 auto; }
 .form-group input, .form-group textarea {
-    width: 100%;
-    padding: 15px;
-    /* DÜZELTME: Şeffaflık azaltıldı (Daha belirgin) */
-    background: rgba(255, 255, 255, 0.15); 
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
+    width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.15); 
+    border: 1px solid var(--border); border-radius: 8px; color: #fff; 
+    font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: 0.3s;
 }
-
 .form-group input:focus, .form-group textarea:focus {
-    border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.25); /* Tıklayınca daha da belirgin */
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    border-color: var(--primary); background: rgba(255, 255, 255, 0.25); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
-
 .form-group textarea { resize: none; }
-
-/* --- SOSYAL MEDYA İKONLARI --- */
-.social-container {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
+.social-container { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+.social-icons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 .s-icon {
-    width: 45px; height: 45px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%; /* Yuvarlak */
-    display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    font-size: 1.2rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    text-decoration: none;
+    width: 45px; height: 45px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem;
+    transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none;
 }
+.s-icon:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: var(--primary); }
 
-/* Hover Efektleri (Her markanın kendi rengi) */
-.s-icon:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-
-.s-icon.email:hover { background: #ea4335; border-color: #ea4335; }
-.s-icon.instagram:hover { background: #e1306c; border-color: #e1306c; } /* Instagram pembesi */
-.s-icon.whatsapp:hover { background: #25D366; border-color: #25D366; } /* Whatsapp yeşili */
-.s-icon.facebook:hover { background: #1877F2; border-color: #1877F2; } /* Facebook mavisi */
-
-/* --- CONTACT FORM PLACEHOLDER AYARLARI --- */
-
-/* Input ve Textarea içindeki silik yazıların rengini açıyoruz */
-#contact-form input::placeholder,
-#contact-form textarea::placeholder {
-    color: rgba(255, 255, 255, 0.7) !important; /* %70 Beyazlık (Daha parlak) */
-    opacity: 1; /* Tarayıcıların otomatik soluklaştırmasını engelle */
-    font-weight: 500; /* Yazıyı biraz kalınlaştır ki net okunsun */
-    letter-spacing: 0.5px;
+/* =========================================
+   9. RESPONSIVE MEDYA SORGULARI
+   ========================================= */
+@media (min-width: 1201px) {
+    .mobile-topbar, .mobile-menu-overlay { display: none !important; }
+    #content-container { width: 100%; left: 50%; } 
+    .headline { font-size: 4.5rem; }
 }
-
-/* Tıklayınca (Focus olunca) placeholder hafifçe solsun ki yazarken karışmasın */
-#contact-form input:focus::placeholder,
-#contact-form textarea:focus::placeholder {
-    color: rgba(255, 255, 255, 0.3) !important;
-    transition: 0.3s;
+@media (max-width: 1200px) {
+    #desktop-logo, .sidebar { display: none !important; }
+    .mobile-topbar { display: flex !important; }
+    #content-container { width: 90%; top: 50%; margin-top: 30px; }
+    .headline { font-size: 2.5rem; }
 }
-
-/* --- PORTFOLYO SEKMELERİ (TABS) --- */
-.portfolio-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.tab-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    padding: 10px 25px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.tab-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.tab-btn.active-tab {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-}
-
-/* Sekme İçerikleri (Başlangıçta gizli) */
-.tab-content {
-    display: none;
-    animation: fadeIn 0.5s ease;
-}
-.tab-content.active-content {
-    display: block;
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-
-/* --- SWIPER SLIDER TASARIMI --- */
-.portfolioSwiper {
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 50px;
-    background: transparent !important; /* Arka plan tamamen şeffaf */
-}
-
-.project-slide {
-    background: transparent; /* Slide'ın kendisi de şeffaf */
-    width: 400px; /* Web siteleri için genişlik */
-    border-radius: 15px;
-    overflow: hidden;
-    position: relative;
-    transition: 0.3s;
-    /* Cam efekti sadece görselin olduğu kutuda olacak */
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-}
-
-.project-slide img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover; /* Görseli kutuya doldur */
-    display: block;
-    transition: 0.5s;
-}
-
-/* Mobil için özel görsel ayarı (Dikey dursunlar) */
-.mobile-slide-img { width: 250px; } /* Mobil slide daha dar */
-.mobile-slide-img img { height: 450px; object-fit: cover; }
-
-/* Hover Efekti */
-.project-slide:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-.project-slide:hover img {
-    transform: scale(1.05); /* Görsel hafif büyüsün */
-}
-
-/* Proje Bilgi Yazısı (Görselin altındaki) */
-.project-info {
-    padding: 15px;
-    background: rgba(10, 10, 25, 0.9);
-    text-align: left;
-}
-.project-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
-.project-info p { font-size: 0.9rem; color: var(--text-muted); }
-.project-link { text-decoration: none; color: inherit; display: block; }
-
-/* Swiper Okları ve Noktaları */
-.swiper-button-next, .swiper-button-prev { color: var(--primary); }
-.swiper-pagination-bullet { background: #fff; opacity: 0.5; }
-.swiper-pagination-bullet-active { background: var(--primary); opacity: 1; }
-
-/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    .project-slide { width: 300px; } /* Mobilde biraz küçült */
-    .project-slide img { height: 200px; }
-    
-    .mobile-slide-img { width: 220px; }
-    .mobile-slide-img img { height: 350px; }
+    .category-grid { grid-template-columns: 1fr; } /* Mobilde tek kolon */
+    #contact.content-card { padding: 20px !important; width: 95% !important; margin-top: 50px; }
 }
