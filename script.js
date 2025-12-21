@@ -58,35 +58,14 @@ particles.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
 const starMesh = new THREE.Points(particles, new THREE.PointsMaterial({size: 0.08, color: 0x3b82f6, transparent: true, opacity: 0.5}));
 scene.add(starMesh);
 
-// ==========================================
-// 3 KATMANLI RESPONSIVE KONUMLANDIRMA (GÜNCEL)
-// ==========================================
+// KONUMLANDIRMA
 function updateLayout() {
     const width = window.innerWidth;
-
-    if (width > 1200) {
-        // --- 1. MASAÜSTÜ (> 1200px) ---
-        // Yazılar Ortada, Dünya SAĞDA (Arka plan gibi)
-        camera.position.set(0, 0, 25);
-        group.position.set(0, 0, 0);
-        group.scale.set(1, 1, 1);
-    } 
-    else if (width <= 1200 && width > 768) {
-        // --- 2. TABLET (768px - 1200px) ---
-        // Dünya ortada ve aşağıda
-        camera.position.set(0, 0, 30); 
-        group.position.set(0, 0, 0);
-        group.scale.set(0.9, 0.9, 0.9); 
-    } 
-    else {
-        // --- 3. MOBİL (< 768px) ---
-        camera.position.set(0, 0, 42); 
-        group.position.set(0, 0, 0); 
-        group.scale.set(1, 1, 1);
-    }
+    if (width > 1200) { camera.position.set(0, 0, 25); group.scale.set(1, 1, 1); } 
+    else if (width <= 1200 && width > 768) { camera.position.set(0, 0, 30); group.scale.set(0.9, 0.9, 0.9); } 
+    else { camera.position.set(0, 0, 42); group.scale.set(1, 1, 1); }
 }
 
-// Başlangıçta ve ekran değişince çalıştır
 updateLayout();
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -105,8 +84,42 @@ function animate() {
 }
 animate();
 
-// UI FONKSİYONLARI
+// ==========================================
+// MODAL (POP-UP) İŞLEMLERİ
+// ==========================================
+var modalSwiper; 
+
+function openAppModal() {
+    const modal = document.getElementById('appModal');
+    modal.style.display = 'flex';
+    
+    // Modal açılınca Swiper'ı başlat (Sadece 1 kere)
+    if (!modalSwiper) {
+        modalSwiper = new Swiper(".modalSwiper", {
+            effect: "cards",
+            grabCursor: true,
+            pagination: { el: ".swiper-pagination", dynamicBullets: true },
+        });
+    }
+}
+
+function closeAppModal() {
+    document.getElementById('appModal').style.display = 'none';
+}
+
+// Modal dışına tıklayınca kapat
+window.onclick = function(event) {
+    const modal = document.getElementById('appModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// ==========================================
+// UI FONKSİYONLARI (MENÜ GEÇİŞLERİ)
+// ==========================================
 function showSection(id) {
+    // Menüleri Aktif Yap
     document.querySelectorAll('.menu-item, .mobile-link').forEach(el => el.classList.remove('active'));
     
     const links = ['home', 'services', 'syncrapy', 'contact'];
@@ -118,11 +131,25 @@ function showSection(id) {
     const mobileItems = document.querySelectorAll('.mobile-link');
     if(mobileItems[index]) mobileItems[index].classList.add('active');
 
-    document.querySelectorAll('.content-card').forEach(el => el.classList.remove('active-card'));
-    const target = document.getElementById(id);
-    setTimeout(() => target.classList.add('active-card'), 50);
+    // Kartları Kapat
+    document.querySelectorAll('.content-card').forEach(el => {
+        el.classList.remove('active-card');
+        el.style.opacity = '0'; 
+        el.style.transform = 'translateY(30px)';
+    });
 
-    document.getElementById('mobileMenu').classList.remove('open');
+    // Seçilen Bölümü Aç
+    const target = document.getElementById(id);
+    if(target) {
+        setTimeout(() => {
+            target.classList.add('active-card');
+            target.style.opacity = '1';
+            target.style.transform = 'translateY(0)';
+        }, 100);
+    }
+
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(mobileMenu) mobileMenu.classList.remove('open');
 }
 
 function toggleMobileMenu() {
@@ -130,110 +157,29 @@ function toggleMobileMenu() {
 }
 
 // ==========================================
-// EMAIL GÖNDERİMİ (EMAILJS)
+// EMAILJS
 // ==========================================
-
-// 1. EmailJS'i Başlat (Kendi Public Key'ini buraya yaz)
 (function() {
     emailjs.init("oLOrV3BZ9Wrne5Zub"); 
 })();
 
 document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Sayfanın yenilenmesini engelle
-
+    event.preventDefault(); 
     const btn = this.querySelector('button');
     const status = document.getElementById('status-text');
-    
-    // Butonu yükleniyor moduna al
     const originalText = btn.innerText;
-    btn.innerText = 'GÖNDERİLİYOR...';
-    btn.disabled = true;
+    
+    btn.innerText = 'GÖNDERİLİYOR...'; btn.disabled = true;
 
-    // EmailJS ile gönder
-    // service_id, template_id, form_elementi
     emailjs.sendForm('service_097revx', 'template_k0g89n8', this)
         .then(function() {
-            // BAŞARILI
-            btn.innerText = 'GÖNDERİLDİ ✓';
-            btn.style.backgroundColor = '#22c55e'; // Yeşil yap
-            status.innerText = "Mesajınız başarıyla iletildi. En kısa sürede döneceğim!";
-            status.style.display = 'block';
-            status.style.color = '#22c55e';
-            
-            // Formu temizle
+            btn.innerText = 'GÖNDERİLDİ ✓'; btn.style.backgroundColor = '#22c55e';
+            status.innerText = "Mesajınız başarıyla iletildi."; status.style.display = 'block'; status.style.color = '#22c55e';
             document.getElementById('contact-form').reset();
-
-            // 3 saniye sonra butonu eski haline getir
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.disabled = false;
-                btn.style.backgroundColor = ''; // Rengi sıfırla
-                status.style.display = 'none';
-            }, 5000);
-
+            setTimeout(() => { btn.innerText = originalText; btn.disabled = false; btn.style.backgroundColor = ''; status.style.display = 'none'; }, 5000);
         }, function(error) {
-            // HATA
-            console.log('FAILED...', error);
-            btn.innerText = 'HATA OLUŞTU';
-            btn.style.backgroundColor = '#ef4444'; // Kırmızı yap
-            status.innerText = "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
-            status.style.display = 'block';
-            status.style.color = '#ef4444';
+            btn.innerText = 'HATA'; btn.style.backgroundColor = '#ef4444';
+            status.innerText = "Bir hata oluştu."; status.style.display = 'block'; status.style.color = '#ef4444';
             btn.disabled = false;
         });
-});
-
-// ==========================================
-// PORTFOLYO SEKMELERİ (TABS) MANTIĞI
-// ==========================================
-function openTab(evt, tabName) {
-    // 1. Tüm sekme içeriklerini gizle
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].classList.remove("active-content");
-    }
-
-    // 2. Tüm butonların aktifliğini kaldır
-    tablinks = document.getElementsByClassName("tab-btn");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].classList.remove("active-tab");
-    }
-
-    // 3. Tıklanan sekmeyi göster ve butonunu aktif yap
-    document.getElementById(tabName).classList.add("active-content");
-    evt.currentTarget.classList.add("active-tab");
-}
-
-
-// ==========================================
-// SWIPER SLIDER BAŞLATMA (Portfolyo İçin)
-// ==========================================
-document.addEventListener("DOMContentLoaded", function() {
-    
-    var portfolioSwiper = new Swiper(".portfolioSwiper", {
-        effect: "coverflow", // Platform efekti
-        grabCursor: true,
-        centeredSlides: true, // Aktif olan ortada
-        slidesPerView: "auto", // Sığdığı kadar göster
-        loop: true, // Sonsuz döngü
-        
-        // Coverflow (Platform) Ayarları
-        coverflowEffect: {
-            rotate: 30,   // Dönüş açısı
-            stretch: 0,
-            depth: 200,   // Derinlik
-            modifier: 1,
-            slideShadows: true, // Gölgeler açık
-        },
-        
-        // Sayfalama ve Oklar
-        pagination: { el: ".swiper-pagination", clickable: true },
-        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-
-        // ÖNEMLİ: Sekme içinde olduğu için gizlenip açılınca bozulmaması için
-        observer: true,
-        observeParents: true,
-    });
-
 });
