@@ -1,1 +1,543 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Gelişmiş Bootstrap 5 Blog - Kaydırmada Sabitlenen Navbar</title>
+    <meta name="description" content="Bootstrap 5, Font Awesome ve modern fontlarla (Montagu Slab, Roboto) hazırlanmış, kaydırmada sabitlenen navbarlı gelişmiş blog şablonu.">
+    <meta name="author" content="Yasin Türk">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montagu+Slab:opsz,wght@16..144,400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* Font Değişkenleri Tanımlandı */
+        :root {
+            --font-heading: 'Montagu Slab', serif; 
+            --font-body: 'Roboto', sans-serif;     
+        }
+
+        html {
+            position: relative;
+            min-height: 100%; /* Sayfanın en az görünüm yüksekliğinde olmasını sağlar */
+        }
+
+        /* BODY STİLİ */
+        body { 
+        font-family: var(--font-body);
+        
+        /* Geçişin yumuşak olması için zorunlu transition */
+        transition: background-image 1.2s ease-in-out; 
+
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-attachment: fixed;
+        
+        /* Footer yüksekliği kadar boşluk (Sticky Footer için) */
+        margin-bottom: 200px;
+    } 
+    
+    /* Arka plan resmini JS ile body'ye uygulayan sınıf */
+    /* Resmin tamamen görünmesi için linear-gradient (overlay) kaldırıldı */
+    .body-background {
+        background-image: var(--current-bg-image);
+    } 
+        
+        /* ************************************************************ */
+        /* NAVBAR STİLLERİ */
+        /* ************************************************************ */
+        .navbar {
+            /* BAŞLANGIÇ STİLİ: Transparan, aşağıda ve akıştan bağımsız */
+            position: absolute; 
+            width: 100%;       
+            top: 30px;         
+            z-index: 1020;     
+            background-color: rgba(0,0,0,0.5) !important; 
+            padding-top: 15px;
+            padding-bottom: 15px;
+            transition: all 0.7s ease-in-out; /* Yumuşak geçiş için */
+        }
+        
+        /* SCROLL YAPINCA DEVREYE GİRECEK STİL */
+        .navbar.scrolled {
+            position: fixed; /* Sabitlendi */
+            top: 0;          /* En üste çekildi */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Gölge eklendi */
+        }
+
+        /* HERO STİLİ */
+        .hero { 
+            background: linear-gradient(135deg, #0d6efd, #6f42c1); 
+            padding: 80px 0; 
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            margin-bottom: 40px;
+            padding-top: 120px; 
+        }
+        
+        /* Diğer Genel Stiller (Korundu) */
+        h1, h2, h3, h4, h5, h6, .display-5, .navbar-brand {
+            font-family: var(--font-heading);
+            font-weight: 700; 
+        }
+        .navbar-brand { font-weight: 700; color: #fff !important; }
+        /* ... geri kalan stiller ... */
+        .hero .display-5 { font-weight: 700; }
+        .hero img { border: 5px solid rgba(255,255,255,0.5); }
+        .post-excerpt { height: 72px; overflow: hidden; }
+        .card-post { transition: transform 0.2s, box-shadow 0.2s; border: none; }
+        .card-post:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,.1); 
+        }
+        .card-post .card-title { color: #0d6efd; font-weight: 600; }
+        .sidebar-category li a { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+        .sidebar-category li a:hover { color: #6f42c1 !important; }
+        .avatar { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid #0d6efd; }
+
+        .text-light-50 {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .hover-bright:hover {
+            color: #fff !important;
+            opacity: 1 !important;
+        }
+        
+    .footer { 
+        position: absolute; 
+        width: 100%;
+        z-index: 1020;     
+        background-color: rgba(0,0,0,0.5) !important; 
+        padding-top: 15px;
+        padding-bottom: 15px;
+        transition: all 0.7s ease-in-out; /* Yumuşak geçiş için */
+        }
+
+    .sticky-nav-btn {
+        position: fixed;
+        width: 50px; height: 50px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s;
+        z-index: 9999;
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(5px);
+    }
+    .sticky-nav-btn:hover { background: #3b82f6; color: white; transform: scale(1.1); }
+    
+    .prev-btn { top: 50%; left: 20px; transform: translateY(-50%); }
+    .next-btn { top: 50%; right: 20px; transform: translateY(-50%); }
+    
+    .home-btn-sticky {
+        position: fixed;
+        bottom: 20px; left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.9);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        z-index: 9999;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: 0.3s;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .home-btn-sticky:hover { background: #ef4444; color: white; }
+
+    @media (max-width: 768px) {
+        .sticky-nav-btn { width: 40px; height: 40px; font-size: 0.9rem; }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-feather-alt me-2"></i>Benim Blogum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-home me-1"></i>Anasayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-user-circle me-1"></i>Hakkımda</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contactModal" data-bs-toggle="modal"><i class="fas fa-envelope me-1"></i>İletişim</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<a href="blog2.html" class="sticky-nav-btn prev-btn" title="Önceki Proje">
+    <i class="fas fa-chevron-left"></i>
+</a>
+
+<a href="blog1.html" class="sticky-nav-btn next-btn" title="Sonraki Proje">
+    <i class="fas fa-chevron-right"></i>
+</a>
+
+<a href="../index.html" class="home-btn-sticky">
+    <i class="fas fa-home"></i> Ana Sayfaya Dön
+</a>
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h1 class="display-5">Modern ve Duyarlı Blog Şablonu</h1>
+                <p class="lead mt-3">Sıfırdan tasarlanan bu şablon, Bootstrap 5'in gücünü modern bir arayüzle birleştiriyor. Hemen kullanmaya başla!</p>
+                <a href="#posts" class="btn btn-warning btn-lg mt-3"><i class="fas fa-arrow-down me-2"></i>En Yeni Yazılar</a>
+            </div>
+            <div class="col-md-5 d-none d-md-block text-end">
+                <img src="https://picsum.photos/400/250?random=10" alt="hero" class="img-fluid rounded shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="container my-5" id="posts">
+    <div class="row">
+        <div class="col-lg-8">
+
+            <div class="card p-3 mb-4 shadow-sm">
+                <h5 class="card-title text-primary mb-3"><i class="fas fa-search me-2"></i>Yazı Ara</h5>
+                <form class="input-group">
+                    <input class="form-control form-control-lg" placeholder="Ara: başlık, etiket..." aria-label="Arama">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            <h2 class="mb-4 text-secondary">Popüler Yazılar</h2>
+            
+            <article class="card mb-4 card-post shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://picsum.photos/seed/p1/600/400" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="post1">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <span class="badge bg-info text-dark mb-2"><i class="fas fa-code"></i> Frontend</span>
+                            <h5 class="card-title">Bootstrap 5 ile Başlarken: Temeller</h5>
+                            <p class="card-text post-excerpt">Bootstrap 5 güçlü ve kolay kullanılır bir frontend kütüphanesidir. Bu yazıda grid sistemi, bileşenler ve pratik ipuçlarına değineceğiz...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> 6 Ekim 2025 • <i class="far fa-clock me-1"></i> 5 dk okuma</small>
+                                </div>
+                                <div>
+                                    <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#postModal" data-title="Bootstrap 5 ile Başlarken: Temeller" data-img="https://picsum.photos/seed/p1/900/500" data-content="Bu yazının detay içeriği. Burada Bootstrap'in Grid sistemi, bileşenleri (navbarlar, modallar vb.) ve özelleştirme yöntemleri daha uzun ve açıklayıcı bir şekilde yer alacak...">Devamını Oku <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card mb-4 card-post shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://picsum.photos/seed/p2/600/400" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="post2">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2"><i class="fas fa-palette"></i> Tasarım</span>
+                            <h5 class="card-title">Daha İyi Bir Sidebar Tasarımı ve UX İpuçları</h5>
+                            <p class="card-text post-excerpt">Sidebar'ı kategoriler, popüler yazılar ve küçük bir biyografi ile zenginleştirebilirsin. Ayrıca mobilde gizleme seçenekleri eklemek önemlidir...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> 1 Ekim 2025 • <i class="far fa-clock me-1"></i> 3 dk okuma</small>
+                                <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#postModal" data-title="Daha İyi Bir Sidebar Tasarımı ve UX İpuçları" data-img="https://picsum.photos/seed/p2/900/500" data-content="Sidebar içeriği detayları. Kullanıcı deneyimi (UX) açısından sidebar'ın konumu, içeriği ve mobil uyumluluğu hakkında pratik bilgiler sunulacak.">Devamını Oku <i class="fas fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <nav aria-label="page navigation" class="mt-5 d-flex justify-content-center">
+                <ul class="pagination pagination-lg shadow-sm">
+                    <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <aside class="col-lg-4">
+            
+            <div class="card mb-4 shadow-sm border-primary border-3">
+                <div class="card-body text-center">
+                    <img src="https://i.pravatar.cc/150?img=1" class="avatar mb-3 shadow-lg" alt="author">
+                    <h5 class="card-title text-primary">Yasin Çimen <i class="fas fa-check-circle text-info small"></i></h5>
+                    <p class="small text-muted mb-3">Frontend geliştirici, UI/UX meraklısı. Kişisel notlar ve eğitim içerikleri için.</p>
+                    <div class="d-grid gap-2">
+                        <a href="#about" class="btn btn-sm btn-primary"><i class="fas fa-info-circle me-1"></i> Hakkımda Daha Fazla</a>
+                    </div>
+                    <div class="mt-3">
+                        <a href="#" class="text-secondary mx-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-secondary mx-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-secondary mx-2"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0 text-dark"><i class="fas fa-tags me-2"></i>Kategoriler</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0 sidebar-category">
+                        <li><a href="#" class="text-dark text-decoration-none">Bootstrap <span class="badge bg-primary">4</span></a></li>
+                        <li><a href="#" class="text-dark text-decoration-none">Frontend <span class="badge bg-primary">8</span></a></li>
+                        <li><a href="#" class="text-dark text-decoration-none">JavaScript <span class="badge bg-primary">6</span></a></li>
+                        <li><a href="#" class="text-dark text-decoration-none">Tasarım <span class="badge bg-primary">5</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0 text-dark"><i class="far fa-bookmark me-2"></i>Son Yazılar</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex gap-3 align-items-center border-bottom pb-3">
+                            <img src="https://picsum.photos/seed/s1/70/50" alt="s1" class="rounded shadow-sm" style="width:70px; height:50px; object-fit:cover;"/>
+                            <div>
+                                <a href="#" class="fw-semibold text-decoration-none text-dark d-block">Grid sistemi derinlemesine</a>
+                                <div class="small text-muted"><i class="far fa-calendar-alt me-1"></i> 12 Eylül 2025</div>
+                            </div>
+                        </li>
+                        <li class="mb-0 d-flex gap-3 align-items-center">
+                            <img src="https://picsum.photos/seed/s2/70/50" alt="s2" class="rounded shadow-sm" style="width:70px; height:50px; object-fit:cover;"/>
+                            <div>
+                                <a href="#" class="fw-semibold text-decoration-none text-dark d-block">Form validasyonu ipuçları</a>
+                                <div class="small text-muted"><i class="far fa-calendar-alt me-1"></i> 3 Eylül 2025</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+</main>
+
+<section id="about" class="py-5 bg-white border-top border-bottom">
+    <div class="container">
+        <h2 class="text-center mb-5 text-dark"><i class="fas fa-user-circle me-2"></i>Hakkımda</h2>
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+                <img src="https://i.pravatar.cc/200?img=1" alt="Yasin Türk" class="rounded-circle shadow-lg mb-4" style="border: 5px solid #0d6efd;">
+            </div>
+            <div class="col-md-8">
+                <p class="lead">Merhaba, ben Yasin Türk. On yılı aşkın süredir **Frontend Geliştirici** olarak çalışıyorum. Bu blog, teknolojiye, özellikle **HTML, CSS, JavaScript** ve modern **UI/UX** trendlerine olan tutkumu paylaşmak için bir alan.</p>
+                <p class="text-muted">Burada, öğrendiğim en iyi uygulamaları, kodlama ipuçlarını ve bazen de tamamen alakasız kişisel düşüncelerimi bulacaksınız. Amacım, kodu daha erişilebilir ve eğlenceli hale getirmek.</p>
+                <a href="#contactModal" data-bs-toggle="modal" class="btn btn-outline-dark"><i class="fas fa-paper-plane me-2"></i>Bana Ulaş</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-light pt-5 pb-4 footer-sticky footer">
+    <div class="container">
+        <div class="row">
+            
+            <!-- Sol Kısım -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-primary mb-3">Benim Blogum</h5>
+                <p class="small text-light">
+                    Web geliştirme, tasarım ve teknoloji üzerine notlar.  
+                    Bizi takipte kalın!
+                </p>
+                <div class="d-flex mt-3">
+                    <a href="#" class="text-light me-3" aria-label="Facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+                    <a href="#" class="text-light me-3" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-light me-3" aria-label="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    <a href="#" class="text-light" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+
+            <!-- Orta Kısım -->
+            <div class="col-6 col-md-2 mb-4">
+                <h6 class="text-primary mb-3">Bağlantılar</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light opacity-75 hover-bright">Anasayfa</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light opacity-75 hover-bright">Tüm Yazılar</a></li>
+                    <li class="nav-item mb-2"><a href="#about" class="nav-link p-0 text-light opacity-75 hover-bright">Hakkımda</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light opacity-75 hover-bright">İletişim</a></li>
+                </ul>
+            </div>
+
+            <!-- Sağ Kısım -->
+            <div class="col-md-6 mb-4">
+                <form>
+                    <h5 class="text-primary mb-3">Bültenimize Abone Olun</h5>
+                    <p class="small text-light-50">
+                        En yeni yazılarımızdan ve teknoloji haberlerinden ilk siz haberdar olun.
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                        <label for="newsletter-email" class="visually-hidden">Email adresi</label>
+                        <input
+                            id="newsletter-email"
+                            type="email"
+                            class="form-control bg-transparent border-light text-light"
+                            placeholder="E-posta adresiniz"
+                        />
+                        <button class="btn btn-primary text-dark fw-bold" type="button">Abone Ol</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr class="my-4 border-secondary">
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center small">
+            <div class="text-light-50">&copy; 2025 Benim Blogum. Tüm Hakları Saklıdır.</div>
+            <div class="pt-2 pt-sm-0">
+                <a href="#" class="text-light-50 text-decoration-none me-3 hover-bright">Gizlilik</a>
+                <a href="#" class="text-light-50 text-decoration-none hover-bright">Kullanım Koşulları</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="postModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fs-4">Yazı Başlığı</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <img src="https://picsum.photos/900/500" alt="post" class="img-fluid mb-4 rounded shadow">
+                <div class="post-body fs-6 text-dark">Yazı içeriği buraya gelecek.</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title"><i class="fas fa-handshake me-2"></i>İletişim Kurun</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">İsim</label>
+                        <input class="form-control" placeholder="Adınız Soyadınız" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">E-posta</label>
+                        <input class="form-control" type="email" placeholder="ornek@mail.com" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Mesaj</label>
+                        <textarea class="form-control" rows="4" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary btn-lg"><i class="fas fa-paper-plane me-2"></i>Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ************************************************************
+    // 1. MODAL KODU (KORUNDU)
+    // ************************************************************
+    var postModal = document.getElementById('postModal')
+    if (postModal) { // Modal varsa dinleyici ekle
+        postModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var title = button.getAttribute('data-title')
+            var img = button.getAttribute('data-img')
+            var content = button.getAttribute('data-content')
+
+            postModal.querySelector('.modal-title').textContent = title
+            postModal.querySelector('img').src = img
+            postModal.querySelector('.post-body').textContent = content
+        });
+    }
+
+
+    // ************************************************************
+    // 2. NAVBAR VE ARKA PLAN DÖNGÜSÜ (BİRLEŞTİRİLMİŞ KOD)
+    // ************************************************************
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar');
+        const scrollThreshold = 100;
+        const body = document.body;
+        
+        // --- ARKA PLAN DÖNGÜSÜ ---
+        // Kendi resimleriniz için dosya yolları (Lütfen sitenizin ana dizininde olduklarından emin olun)
+        const backgroundImages = [
+            'url("bali.jpg")', 
+            'url("beach.jpg")', 
+            'url("cliff.jpg")', 
+            'url("landscape.jpg")', 
+            'url("mountains.jpg")', 
+            'url("sunrise.jpg")',
+            'url("sunset.jpg")',
+            // Eğer kendi resimleriniz çalışmazsa, bu satırı silip yorum satırındaki Picsum resimlerini kullanın:
+            // 'url("https://picsum.photos/id/1018/1920/1080")',
+        ];
+        
+        let currentImageIndex = 0;
+        const transitionDuration = 7000; // Resim değişim süresi (7 saniye)
+
+        function changeBackgroundImage() {
+            // 1. Body'ye gerekli sınıfı ekle (Sadece bir kere eklenmesi yeterlidir)
+            body.classList.add('body-background');
+            
+            // 2. CSS Değişkenini Güncelle
+            body.style.setProperty('--current-bg-image', backgroundImages[currentImageIndex]);
+            
+            // 3. İndeksi artır ve döngüye al
+            currentImageIndex++;
+            if (currentImageIndex >= backgroundImages.length) {
+                currentImageIndex = 0;
+            }
+        }
+
+        // Başlangıçta bir kez çalıştır ve zamanlayıcıyı başlat
+        changeBackgroundImage();
+        setInterval(changeBackgroundImage, transitionDuration);
+
+
+        // --- NAVBAR STICKY KODU ---
+        function toggleNavbarClass() {
+            if (window.scrollY >= scrollThreshold) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Sayfa yüklendiğinde ve kaydırmada kontrol et
+        toggleNavbarClass();
+        window.addEventListener('scroll', toggleNavbarClass);
+    });
+</script>
+</body>
+</html>
