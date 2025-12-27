@@ -208,20 +208,42 @@ body {
 .s-icon:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: var(--primary); }
 
 /* =========================================
-   9. RESPONSIVE MEDYA SORGULARI
+   9. RESPONSIVE MEDYA SORGULARI (GÜNCELLENMİŞ)
    ========================================= */
 @media (min-width: 1201px) {
     .mobile-topbar, .mobile-menu-overlay { display: none !important; }
     #content-container { width: 100%; left: 50%; } 
     .headline { font-size: 4.5rem; }
 }
+
 @media (max-width: 1200px) {
     #desktop-logo, .sidebar { display: none !important; }
     .mobile-topbar { display: flex !important; }
-    #content-container { width: 90%; top: 50%; margin-top: 30px; }
+    
+    #content-container { 
+        width: 90%; 
+        /* ESKİSİ: top: 50%; transform: translate(-50%, -50%); */
+        
+        /* YENİSİ: Dikey ortalamayı iptal et, yukarıdan güvenli boşluk ver */
+        top: 110px; /* 70px Topbar + 40px ekstra boşluk */
+        left: 50%;
+        transform: translateX(-50%); /* Sadece yatayda ortala */
+        margin-top: 0;
+        
+        /* İçeriğin ekranın altına taşmasını önlemek için boyutu sınırla */
+        height: auto;
+        max-height: calc(100vh - 120px); 
+    }
+    
     .headline { font-size: 2.5rem; }
 }
+
 @media (max-width: 768px) {
-    .category-grid { grid-template-columns: 1fr; } /* Mobilde tek kolon */
-    #contact.content-card { padding: 20px !important; width: 95% !important; margin-top: 50px; }
+    .category-grid { grid-template-columns: 1fr; } 
+    /* Mobilde iletişim kutusunun da yukarıdan ezilmemesi için ekstra güvenlik */
+    #contact.content-card { 
+        padding: 20px !important; 
+        width: 95% !important; 
+        margin-top: 0; 
+    }
 }
