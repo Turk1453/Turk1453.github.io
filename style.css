@@ -234,6 +234,9 @@ body {
         height: auto;
         max-height: calc(100vh - 120px); 
     }
+   .content-card {
+        padding-bottom: 120px !important;
+    }
     
     .headline { font-size: 2.5rem; }
 }
@@ -242,7 +245,8 @@ body {
     .category-grid { grid-template-columns: 1fr; } 
     /* Mobilde iletişim kutusunun da yukarıdan ezilmemesi için ekstra güvenlik */
     #contact.content-card { 
-        padding: 20px !important; 
+        padding: 20px !important;
+        padding-bottom: 120px !important;
         width: 95% !important; 
         margin-top: 0; 
     }
